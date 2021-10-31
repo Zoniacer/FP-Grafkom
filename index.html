@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>three.js - pointerlock controls</title>
+		<title>FP - Grafkom Zoniacer</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<link type="text/css" rel="stylesheet" href="main.css">
@@ -186,43 +186,50 @@
 
 				// floor
 
-				let floorGeometry = new THREE.PlaneGeometry( 2000, 2000, 100, 100 );
+				let floorGeometry = new THREE.PlaneGeometry( 2000, 2000 );
 				floorGeometry.rotateX( - Math.PI / 2 );
 
 				// vertex displacement
 
 				let position = floorGeometry.attributes.position;
+				
 
-				for ( let i = 0, l = position.count; i < l; i ++ ) {
+				// let floorGeometry2 = new THREE.PlaneGeometry( 500, 500 );
+				// floorGeometry2.rotateX( - Math.PI / 2 );
 
-					vertex.fromBufferAttribute( position, i );
+				// vertex displacement
 
-					vertex.x += Math.random() * 20 - 10;
-					vertex.y += Math.random() * 2;
-					vertex.z += Math.random() * 20 - 10;
+				// let position2 = floorGeometry2.attributes.position;
+				// position2.z = 2;
+				// for ( let i = 0, l = position.count; i < l; i ++ ) {
 
-					position.setXYZ( i, vertex.x, vertex.y, vertex.z );
+				// 	vertex.fromBufferAttribute( position, i );
 
-				}
+				// 	vertex.x += Math.random() * 20 - 10;
+				// 	vertex.y += Math.random() * 2;
+				// 	vertex.z += Math.random() * 20 - 10;
+
+				// 	position.setXYZ( i, vertex.x, vertex.y, vertex.z );
+
+				// }
+
+				var groundTexture = new THREE.TextureLoader().load("texture/Grass.jpg");
+				groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
+				groundTexture.repeat.set( 200, 200 );
+				groundTexture.anisotropy = 16;
+				groundTexture.encoding = THREE.sRGBEncoding;
 
 				floorGeometry = floorGeometry.toNonIndexed(); // ensure each face has unique vertices
 
 				position = floorGeometry.attributes.position;
-				const colorsFloor = [];
-
-				for ( let i = 0, l = position.count; i < l; i ++ ) {
-
-					color.setHSL( Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75 );
-					colorsFloor.push( color.r, color.g, color.b );
-
-				}
-
-				floorGeometry.setAttribute( 'color', new THREE.Float32BufferAttribute( colorsFloor, 3 ) );
-
-				const floorMaterial = new THREE.MeshBasicMaterial( { vertexColors: true } );
-
+				const floorMaterial = new THREE.MeshToonMaterial( { color: "rgb(96,205,226)", map: groundTexture} );
+				//const floorMaterial2 = new THREE.MeshLambertMaterial( { color: "rgb(208,198,168)"} );
+				
 				const floor = new THREE.Mesh( floorGeometry, floorMaterial );
 				scene.add( floor );
+				//const floor2 = new THREE.Mesh( floorGeometry2, floorMaterial2 );
+				//scene.add( floor2 );
+
 
 				// objects
 
