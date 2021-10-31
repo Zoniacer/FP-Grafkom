@@ -57,6 +57,7 @@
 			let moveBackward = false;
 			let moveLeft = false;
 			let moveRight = false;
+            let run = 1;
 			let canJump = false;
 
 			let prevTime = performance.now();
@@ -137,6 +138,10 @@
 							canJump = false;
 							break;
 
+                        case 'KeyR':
+                            run = 2;
+                            break;
+
 					}
 
 				};
@@ -164,6 +169,11 @@
 						case 'KeyD':
 							moveRight = false;
 							break;
+                        
+                        case 'KeyR':
+                            run = 1;
+                            break;
+
 
 					}
 
@@ -265,8 +275,8 @@
 					direction.x = Number( moveRight ) - Number( moveLeft );
 					direction.normalize(); // this ensures consistent movements in all directions
 
-					if ( moveForward || moveBackward ) velocity.z -= direction.z * 400.0 * delta;
-					if ( moveLeft || moveRight ) velocity.x -= direction.x * 400.0 * delta;
+					if ( moveForward || moveBackward ) velocity.z -= direction.z * 400.0 * delta * run;
+					if ( moveLeft || moveRight ) velocity.x -= direction.x * 400.0 * delta * run;
 
 					if ( onObject === true ) {
 
