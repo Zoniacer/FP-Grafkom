@@ -30,7 +30,12 @@ function init() {
     camera.position.y = 10;
 
     scene = new THREE.Scene();
-    scene.background = new THREE.Color( 0xcaf0f8 );
+    const loaderBackground = new THREE.TextureLoader();
+    const textureBackground = loaderBackground.load('texture/Skybox.jpg', () => {
+        const rt = new THREE.WebGLCubeRenderTarget(textureBackground.image.height);
+        rt.fromEquirectangularTexture(renderer, textureBackground);
+        scene.background = rt.texture;
+        })
     scene.fog = new THREE.Fog( 0xcaf0f8, 0, 750 );
 
     const light = new THREE.HemisphereLight( 0xeeeeff, 0x777788, 0.75 );
@@ -167,9 +172,13 @@ function init() {
     let geometry = new THREE.BoxGeometry(30,30,30);
     let texture = new THREE.MeshLambertMaterial({color:'rgb(0,0,250)'});
     let kubus = new THREE.Mesh(geometry, texture);
-    kubus.position.set(30,15,30);
+    kubus.position.set(-30,15,-30);
     scene.add(kubus);
     objects.push(kubus);
+    let kubus2 = kubus.clone();
+    kubus2.position.set(30, 45, -75);
+    scene.add(kubus2);
+    objects.push(kubus2);
     //
     renderer = new THREE.WebGLRenderer( { antialias: true } );
     renderer.setPixelRatio( window.devicePixelRatio );
@@ -219,9 +228,16 @@ function animate() {
             controls.getObject().position.y = 10;
             canJump = true;
 		}
-        if ( controls.getObject().position.y < 30 && controls.getObject().position.x > 15 && controls.getObject().position.x < 45 && controls.getObject().position.z < 45 && controls.getObject().position.z > 15) {
+        if ( controls.getObject().position.y < 30 && controls.getObject().position.x < -15 && controls.getObject().position.x > -45 && controls.getObject().position.z > -45 && controls.getObject().position.z < -15) {
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
+		}
+        if ( controls.getObject().position.y < 60 && controls.getObject().position.y > 30 && controls.getObject().position.x >15 && controls.getObject().position.x < 45 && controls.getObject().position.z > -90 && controls.getObject().position.z < -60) {
+            if(controls.getObject().position.y > 15) velocity.y = -velocity.y * -1;
+            else{
+                velocity.x = -velocity.x * 3;
+                velocity.z = -velocity.z * 3;
+            }
 		}
     }
 
