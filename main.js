@@ -27,7 +27,7 @@ animate();
 
 function init() {
     camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1000 );
-    camera.position.y = 10;
+    camera.position.y = 40;
 
     scene = new THREE.Scene();
     const loaderBackground = new THREE.TextureLoader();
@@ -118,10 +118,16 @@ function init() {
                 break;
 		}
     };
-
+    const onMouseWheel = function ( event ) {
+        var fovMAX = 100;
+        var fovMIN = -500;
+        camera.fov -= event.wheelDeltaY * 0.05;
+        camera.fov = Math.max(Math.min(camera.fov, fovMAX), fovMIN);
+        camera.updateProjectionMatrix();
+    };
     document.addEventListener( 'keydown', onKeyDown );
     document.addEventListener( 'keyup', onKeyUp );
-
+    document.addEventListener( 'mousewheel', onMouseWheel, false );
     raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 );
 
     // floor
@@ -169,16 +175,7 @@ function init() {
     //const floor2 = new THREE.Mesh( floorGeometry2, floorMaterial2 );
     //scene.add( floor2 );
     // objects
-    let geometry = new THREE.BoxGeometry(30,30,30);
-    let texture = new THREE.MeshLambertMaterial({color:'rgb(0,0,250)'});
-    let kubus = new THREE.Mesh(geometry, texture);
-    kubus.position.set(-30,15,-30);
-    scene.add(kubus);
-    objects.push(kubus);
-    let kubus2 = kubus.clone();
-    kubus2.position.set(30, 45, -75);
-    scene.add(kubus2);
-    objects.push(kubus2);
+    createPlatforms()
     //
     renderer = new THREE.WebGLRenderer( { antialias: true } );
     renderer.setPixelRatio( window.devicePixelRatio );
@@ -187,6 +184,32 @@ function init() {
     //
     window.addEventListener( 'resize', onWindowResize );
 
+}
+function createPlatforms(){
+    let geometry = new THREE.BoxGeometry(30,30,30);
+    // var groundTexture = new THREE.TextureLoader().load("texture/Grass.jpg");
+    let texture = new THREE.MeshLambertMaterial({color:'rgb(0,0,250)'});
+    // let texture = new THREE.MeshLambertMaterial({groundTexture});
+    let kubus = new THREE.Mesh(geometry, texture);
+    kubus.position.set(-30,15,-30);
+    scene.add(kubus);
+    objects.push(kubus);
+    let kubus2 = kubus.clone();
+    kubus2.position.set(30, 35, -55);
+    scene.add(kubus2);
+    objects.push(kubus2);
+    let kubus3 = kubus.clone();
+    kubus3.position.set(-30, 45, -110);
+    scene.add(kubus3);
+    objects.push(kubus3);
+    let kubus4 = kubus.clone();
+    kubus4.position.set(0, 45, -110);
+    scene.add(kubus4);
+    objects.push(kubus4);
+    let kubus5 = kubus.clone();
+    kubus5.position.set(-30, 45, -140);
+    scene.add(kubus5);
+    objects.push(kubus5);
 }
 
 function onWindowResize() {
