@@ -186,10 +186,12 @@ function init() {
 
 }
 function createPlatforms(){
+    const loadManager = new THREE.LoadingManager();
+    const loader = new THREE.TextureLoader(loadManager);
+    
     let geometry = new THREE.BoxGeometry(30,30,30);
-    // var groundTexture = new THREE.TextureLoader().load("texture/Grass.jpg");
-    let texture = new THREE.MeshLambertMaterial({color:'rgb(0,0,250)'});
-    // let texture = new THREE.MeshLambertMaterial({groundTexture});
+    // let texture = new THREE.MeshLambertMaterial({color:'rgb(0,0,250)'});
+    let texture = new THREE.MeshLambertMaterial({map: loader.load('texture/wood1.jpg')});
     let kubus = new THREE.Mesh(geometry, texture);
     kubus.position.set(-30,15,-30);
     scene.add(kubus);
