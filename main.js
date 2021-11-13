@@ -176,6 +176,7 @@ function init() {
     //scene.add( floor2 );
     // objects
     createPlatforms()
+
     //
     renderer = new THREE.WebGLRenderer( { antialias: true } );
     renderer.setPixelRatio( window.devicePixelRatio );
@@ -185,6 +186,44 @@ function init() {
     window.addEventListener( 'resize', onWindowResize );
 
 }
+function createText() {
+
+    textGeo = new TextGeometry( "Halo", {
+
+        font: font,
+
+        size: size,
+        height: height,
+        curveSegments: curveSegments,
+
+        bevelThickness: bevelThickness,
+        bevelSize: bevelSize,
+        bevelEnabled: bevelEnabled
+
+    } );
+
+    textGeo.computeBoundingBox();
+
+    const centerOffset = - 0.5 * ( textGeo.boundingBox.max.x - textGeo.boundingBox.min.x );
+
+    textMesh1 = new THREE.Mesh( textGeo, materials );
+
+    textMesh1.position.x = centerOffset;
+    textMesh1.position.y = hover;
+    textMesh1.position.z = 0;
+
+    textMesh1.rotation.x = 0;
+    textMesh1.rotation.y = Math.PI * 2;
+
+    group.add( textMesh1 );
+
+}
+
+function createKubus(kubus, x,y,z){
+    kubus.position.set(x, y, z);
+    scene.add(kubus);
+    objects.push(kubus);
+}
 function createPlatforms(){
     const loadManager = new THREE.LoadingManager();
     const loader = new THREE.TextureLoader(loadManager);
@@ -193,26 +232,18 @@ function createPlatforms(){
     // let texture = new THREE.MeshLambertMaterial({color:'rgb(0,0,250)'});
     let texture = new THREE.MeshLambertMaterial({map: loader.load('texture/wood1.jpg')});
     let kubus = new THREE.Mesh(geometry, texture);
-    kubus.position.set(-30,15,-30);
-    scene.add(kubus);
-    objects.push(kubus);
+    createKubus(kubus,-30,15,-30);
     let kubus2 = kubus.clone();
-    kubus2.position.set(30, 35, -55);
-    scene.add(kubus2);
-    objects.push(kubus2);
+    createKubus(kubus2,30, 35, -55);
     let kubus3 = kubus.clone();
-    kubus3.position.set(-30, 45, -110);
-    scene.add(kubus3);
-    objects.push(kubus3);
+    createKubus(kubus3,-30, 45, -110);
     let kubus4 = kubus.clone();
-    kubus4.position.set(0, 45, -110);
-    scene.add(kubus4);
-    objects.push(kubus4);
+    createKubus(kubus4,0, 45, -110);
     let kubus5 = kubus.clone();
-    kubus5.position.set(-30, 45, -140);
-    scene.add(kubus5);
-    objects.push(kubus5);
+    createKubus(kubus5,-30, 45, -140);
 }
+
+
 
 function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
