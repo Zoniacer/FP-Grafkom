@@ -206,7 +206,7 @@ function createText() {
 						side: THREE.DoubleSide
 					} );
 
-					const message = "   Three.js\nSimple text.";
+					const message = "Level 1";
 
 					const shapes = font.generateShapes( message, 100 );
 
@@ -220,9 +220,9 @@ function createText() {
 
 					// make shape ( N.B. edge view not visible )
 
-					const text = new THREE.Mesh( geometry, matLite );
-					text.position.z = - 150;
-					scene.add( text );
+					//const text = new THREE.Mesh( geometry, matLite );
+					//text.position.set(-45,100,-150)
+					//scene.add( text );
 
 					// make line shape ( N.B. edge view remains visible )
 
@@ -262,7 +262,7 @@ function createText() {
 						lineText.add( lineMesh );
 
 					}
-
+                    lineText.position.set(0, 100, -140)
 					scene.add( lineText );
 
 				} );
@@ -273,6 +273,10 @@ function createKubus(kubus, x,y,z){
     kubus.position.set(x, y, z);
     scene.add(kubus);
     objects.push(kubus);
+}
+function createKubus2(kubus, x, y, z){
+    kubus.position.set(x, y, z);
+    scene.add(kubus);
 }
 function createPlatforms(){
     const loadManager = new THREE.LoadingManager();
@@ -285,6 +289,8 @@ function createPlatforms(){
     createKubus(kubus,-30,15,-30);
     let kubus2 = kubus.clone();
     createKubus(kubus2,30, 35, -55);
+    let kubus2b = kubus.clone();
+    createKubus(kubus2b,30, 5, -55);
     let kubus3 = kubus.clone();
     createKubus(kubus3,-30, 45, -110);
     let kubus4 = kubus.clone();
@@ -297,16 +303,16 @@ function createPlatforms(){
     createKubus(kubus7,50, 55, -210);
     let kubus8 = kubus.clone();
     createKubus(kubus8,20, 55, -180);
-    let kubus9 = kubus.clone();createKubus(kubus9,-30, 15, -240);
+    let kubus9 = kubus.clone();createKubus2(kubus9,-30, 15, -240);
     let kubus10 = kubus.clone();createKubus(kubus10,-30, 45, -240);
     let kubus11 = kubus.clone();createKubus(kubus11,-40, 65, -300);// 4kubus kiri
-    let kubus11b = kubus.clone();createKubus(kubus11b,-40, 35, -300);// 4kubus kiri
+    let kubus11b = kubus.clone();createKubus2(kubus11b,-40, 35, -300);// 4kubus kiri
     let kubus14 = kubus.clone();createKubus(kubus14,-10, 65, -300);
-    let kubus14b = kubus.clone();createKubus(kubus14b,-10, 35, -300);
+    let kubus14b = kubus.clone();createKubus2(kubus14b,-10, 35, -300);
     let kubus12= kubus.clone();createKubus(kubus12,-40, 65, -330);
-    let kubus12b= kubus.clone();createKubus(kubus12b,-40, 35, -330);
+    let kubus12b= kubus.clone();createKubus2(kubus12b,-40, 35, -330);
     let kubus13= kubus.clone();createKubus(kubus13,-10, 65, -330);
-    let kubus13b= kubus.clone();createKubus(kubus13b,-10, 35, -330);
+    let kubus13b= kubus.clone();createKubus2(kubus13b,-10, 35, -330);
     let kubus15= kubus.clone();createKubus(kubus15,50, 75, -360); // 3kubus kanan
     let kubus16= kubus.clone();createKubus(kubus16,80, 75, -360);
     let kubus16b= kubus.clone();createKubus(kubus16b,110, 75, -360);
@@ -317,11 +323,7 @@ function createPlatforms(){
     let kubus20= kubus.clone();createKubus(kubus20,-30, 95, -430);
     let kubus21= kubus.clone();createKubus(kubus21,-60, 95, -430);
 
-
-
 }
-
-
 
 function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -362,16 +364,26 @@ function animate() {
             controls.getObject().position.y = 10;
             canJump = true;
 		}
+        //kubus1
         if ( controls.getObject().position.y < 30 && controls.getObject().position.x < -15 && controls.getObject().position.x > -45 && controls.getObject().position.z > -45 && controls.getObject().position.z < -15) {
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
 		}
-        if ( controls.getObject().position.y < 60 && controls.getObject().position.y > 30 && controls.getObject().position.x >15 && controls.getObject().position.x < 45 && controls.getObject().position.z > -90 && controls.getObject().position.z < -60) {
-            if(controls.getObject().position.y > 15) velocity.y = -velocity.y * -1;
-            else{
-                velocity.x = -velocity.x * 3;
-                velocity.z = -velocity.z * 3;
-            }
+        //kubus2
+        if ( controls.getObject().position.y < 50 && controls.getObject().position.x > 15 && controls.getObject().position.x < 45 && controls.getObject().position.z > -70 && controls.getObject().position.z < -40) {
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+		}
+        //kubus9
+        if ( controls.getObject().position.y < 60 && controls.getObject().position.x < -15 && controls.getObject().position.x > -45 && controls.getObject().position.z > -255 && controls.getObject().position.z < -225) {
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+		}
+        //4 kubus
+        if ( controls.getObject().position.y < 80 && controls.getObject().position.y > 20 && controls.getObject().position.x < 5 && controls.getObject().position.x > -55 && controls.getObject().position.z > -345 && controls.getObject().position.z < -285) {
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+            velocity.y = -velocity.y * 1.05;
 		}
     }
 
