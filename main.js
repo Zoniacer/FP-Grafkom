@@ -241,6 +241,34 @@ function createPlatforms(){
     createKubus(kubus4,0, 45, -110);
     let kubus5 = kubus.clone();
     createKubus(kubus5,-30, 45, -140);
+    let kubus6 = kubus.clone();
+    createKubus(kubus6,50, 55, -180);
+    let kubus7 = kubus.clone();
+    createKubus(kubus7,50, 55, -210);
+    let kubus8 = kubus.clone();
+    createKubus(kubus8,20, 55, -180);
+    let kubus9 = kubus.clone();createKubus(kubus9,-30, 15, -240);
+    let kubus10 = kubus.clone();createKubus(kubus10,-30, 45, -240);
+    let kubus11 = kubus.clone();createKubus(kubus11,-40, 65, -300);// 4kubus kiri
+    let kubus11b = kubus.clone();createKubus(kubus11b,-40, 35, -300);// 4kubus kiri
+    let kubus14 = kubus.clone();createKubus(kubus14,-10, 65, -300);
+    let kubus14b = kubus.clone();createKubus(kubus14b,-10, 35, -300);
+    let kubus12= kubus.clone();createKubus(kubus12,-40, 65, -330);
+    let kubus12b= kubus.clone();createKubus(kubus12b,-40, 35, -330);
+    let kubus13= kubus.clone();createKubus(kubus13,-10, 65, -330);
+    let kubus13b= kubus.clone();createKubus(kubus13b,-10, 35, -330);
+    let kubus15= kubus.clone();createKubus(kubus15,50, 75, -360); // 3kubus kanan
+    let kubus16= kubus.clone();createKubus(kubus16,80, 75, -360);
+    let kubus16b= kubus.clone();createKubus(kubus16b,110, 75, -360);
+    let kubus17= kubus.clone();createKubus(kubus17,0, 95, -400);//6kubus kiri sebelum stage
+    let kubus18= kubus.clone();createKubus(kubus18,-30, 95, -400);
+    let kubus22= kubus.clone();createKubus(kubus22,-60, 95, -400);
+    let kubus19= kubus.clone();createKubus(kubus19,0, 95, -430);
+    let kubus20= kubus.clone();createKubus(kubus20,-30, 95, -430);
+    let kubus21= kubus.clone();createKubus(kubus21,-60, 95, -430);
+
+
+
 }
 
 
