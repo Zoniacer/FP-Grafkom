@@ -286,7 +286,7 @@ function createPlatforms(){
     //stage
     let geo = new THREE.BoxGeometry(270,30,200);
     // let texture = new THREE.MeshLambertMaterial({color:ssrgb(0,0,250)'});
-    let wood = new THREE.MeshLambertMaterial({map: loader.load('texture/woodlight.jpg')});
+    let wood = new THREE.MeshLambertMaterial({map: loader.load('texture/wood1.jpg')});
     let cube = new THREE.Mesh(geo, wood);
     createKubus(cube,60, 155, -630);
 
