@@ -1,6 +1,5 @@
 import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/build/three.module.js';
 import {PointerLockControls} from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/controls/PointerLockControls.js';
-import { FontLoader } from './jsm/loaders/FontLoader.js';
 
 let camera, scene, renderer, controls;
 
@@ -177,7 +176,7 @@ function init() {
     //scene.add( floor2 );
     // objects
     createPlatforms()
-    createText()
+
     //
     renderer = new THREE.WebGLRenderer( { antialias: true } );
     renderer.setPixelRatio( window.devicePixelRatio );
@@ -187,86 +186,37 @@ function init() {
     window.addEventListener( 'resize', onWindowResize );
 
 }
-
 function createText() {
-    const loader = new FontLoader();
-				loader.load( 'fonts/helvetiker_regular.typeface.json', function ( font ) {
 
-					const color = 0x006699;
+    textGeo = new TextGeometry( "Halo", {
 
-					const matDark = new THREE.LineBasicMaterial( {
-						color: color,
-						side: THREE.DoubleSide
-					} );
+        font: font,
 
-					const matLite = new THREE.MeshBasicMaterial( {
-						color: color,
-						transparent: true,
-						opacity: 0.4,
-						side: THREE.DoubleSide
-					} );
+        size: size,
+        height: height,
+        curveSegments: curveSegments,
 
-					const message = "Level 1";
+        bevelThickness: bevelThickness,
+        bevelSize: bevelSize,
+        bevelEnabled: bevelEnabled
 
-					const shapes = font.generateShapes( message, 100 );
+    } );
 
-					const geometry = new THREE.ShapeGeometry( shapes );
+    textGeo.computeBoundingBox();
 
-					geometry.computeBoundingBox();
+    const centerOffset = - 0.5 * ( textGeo.boundingBox.max.x - textGeo.boundingBox.min.x );
 
-					const xMid = - 0.5 * ( geometry.boundingBox.max.x - geometry.boundingBox.min.x );
+    textMesh1 = new THREE.Mesh( textGeo, materials );
 
-					geometry.translate( xMid, 0, 0 );
+    textMesh1.position.x = centerOffset;
+    textMesh1.position.y = hover;
+    textMesh1.position.z = 0;
 
-					// make shape ( N.B. edge view not visible )
+    textMesh1.rotation.x = 0;
+    textMesh1.rotation.y = Math.PI * 2;
 
-					//const text = new THREE.Mesh( geometry, matLite );
-					//text.position.set(-45,100,-150)
-					//scene.add( text );
+    group.add( textMesh1 );
 
-					// make line shape ( N.B. edge view remains visible )
-
-					const holeShapes = [];
-
-					for ( let i = 0; i < shapes.length; i ++ ) {
-
-						const shape = shapes[ i ];
-
-						if ( shape.holes && shape.holes.length > 0 ) {
-
-							for ( let j = 0; j < shape.holes.length; j ++ ) {
-
-								const hole = shape.holes[ j ];
-								holeShapes.push( hole );
-
-							}
-
-						}
-
-					}
-
-					shapes.push.apply( shapes, holeShapes );
-
-					const lineText = new THREE.Object3D();
-
-					for ( let i = 0; i < shapes.length; i ++ ) {
-
-						const shape = shapes[ i ];
-
-						const points = shape.getPoints();
-						const geometry = new THREE.BufferGeometry().setFromPoints( points );
-
-						geometry.translate( xMid, 0, 0 );
-
-						const lineMesh = new THREE.Line( geometry, matDark );
-						lineText.add( lineMesh );
-
-					}
-                    lineText.position.set(0, 100, -140)
-					scene.add( lineText );
-
-				} );
-    
 }
 
 function createKubus(kubus, x,y,z){
@@ -274,56 +224,75 @@ function createKubus(kubus, x,y,z){
     scene.add(kubus);
     objects.push(kubus);
 }
-function createKubus2(kubus, x, y, z){
-    kubus.position.set(x, y, z);
-    scene.add(kubus);
-}
 function createPlatforms(){
     const loadManager = new THREE.LoadingManager();
     const loader = new THREE.TextureLoader(loadManager);
-    
     let geometry = new THREE.BoxGeometry(30,30,30);
     // let texture = new THREE.MeshLambertMaterial({color:'rgb(0,0,250)'});
     let texture = new THREE.MeshLambertMaterial({map: loader.load('texture/wood1.jpg')});
-    let kubus = new THREE.Mesh(geometry, texture);
-    createKubus(kubus,-30,15,-30);
-    let kubus2 = kubus.clone();
-    createKubus(kubus2,30, 35, -55);
-    let kubus2b = kubus.clone();
-    createKubus(kubus2b,30, 5, -55);
-    let kubus3 = kubus.clone();
-    createKubus(kubus3,-30, 45, -110);
-    let kubus4 = kubus.clone();
-    createKubus(kubus4,0, 45, -110);
-    let kubus5 = kubus.clone();
-    createKubus(kubus5,-30, 45, -140);
-    let kubus6 = kubus.clone();
-    createKubus(kubus6,50, 55, -180);
-    let kubus7 = kubus.clone();
-    createKubus(kubus7,50, 55, -210);
-    let kubus8 = kubus.clone();
-    createKubus(kubus8,20, 55, -180);
-    let kubus9 = kubus.clone();createKubus2(kubus9,-30, 15, -240);
+    let kubus = new THREE.Mesh(geometry, texture);createKubus(kubus,-30,15,-30);//1st cube
+    let kubus2 = kubus.clone();createKubus(kubus2,30, 35, -55);
+    //3kubus kiri
+    let kubus3 = kubus.clone();createKubus(kubus3,-30, 45, -110);
+    let kubus4 = kubus.clone();createKubus(kubus4,0, 45, -110);
+    let kubus5 = kubus.clone();createKubus(kubus5,-30, 45, -140);
+    //3kubus kanan
+    let kubus6 = kubus.clone();createKubus(kubus6,50, 55, -180);
+    let kubus7 = kubus.clone();createKubus(kubus7,50, 55, -210);
+    let kubus8 = kubus.clone();createKubus(kubus8,20, 55, -180);
+    //tower kubus kiri
+    let kubus9 = kubus.clone();createKubus(kubus9,-30, 15, -240);
     let kubus10 = kubus.clone();createKubus(kubus10,-30, 45, -240);
-    let kubus11 = kubus.clone();createKubus(kubus11,-40, 65, -300);// 4kubus kiri
-    let kubus11b = kubus.clone();createKubus2(kubus11b,-40, 35, -300);// 4kubus kiri
+    // 4kubus kiri
+    let kubus11 = kubus.clone();createKubus(kubus11,-40, 65, -300);
+    let kubus11b = kubus.clone();createKubus(kubus11b,-40, 35, -300);
     let kubus14 = kubus.clone();createKubus(kubus14,-10, 65, -300);
-    let kubus14b = kubus.clone();createKubus2(kubus14b,-10, 35, -300);
+    let kubus14b = kubus.clone();createKubus(kubus14b,-10, 35, -300);
     let kubus12= kubus.clone();createKubus(kubus12,-40, 65, -330);
-    let kubus12b= kubus.clone();createKubus2(kubus12b,-40, 35, -330);
+    let kubus12b= kubus.clone();createKubus(kubus12b,-40, 35, -330);
     let kubus13= kubus.clone();createKubus(kubus13,-10, 65, -330);
-    let kubus13b= kubus.clone();createKubus2(kubus13b,-10, 35, -330);
-    let kubus15= kubus.clone();createKubus(kubus15,50, 75, -360); // 3kubus kanan
+    let kubus13b= kubus.clone();createKubus(kubus13b,-10, 35, -330);
+    // 3kubus kanan
+    let kubus15= kubus.clone();createKubus(kubus15,50, 75, -360); 
     let kubus16= kubus.clone();createKubus(kubus16,80, 75, -360);
     let kubus16b= kubus.clone();createKubus(kubus16b,110, 75, -360);
-    let kubus17= kubus.clone();createKubus(kubus17,0, 95, -400);//6kubus kiri sebelum stage
+    //6kubus kiri sebelum stage
+    let kubus17= kubus.clone();createKubus(kubus17,0, 95, -400);
     let kubus18= kubus.clone();createKubus(kubus18,-30, 95, -400);
     let kubus22= kubus.clone();createKubus(kubus22,-60, 95, -400);
     let kubus19= kubus.clone();createKubus(kubus19,0, 95, -430);
     let kubus20= kubus.clone();createKubus(kubus20,-30, 95, -430);
     let kubus21= kubus.clone();createKubus(kubus21,-60, 95, -430);
+    //tangga stage 1
+    let stairs= kubus.clone();createKubus(stairs,-30, 95, -490);
+    let stairs2= kubus.clone();createKubus(stairs2,0, 95, -490);
+    let stairs3= kubus.clone();createKubus(stairs3,30, 95, -490);
+    let stairs4= kubus.clone();createKubus(stairs4,-60, 95, -490);
+    let stairs5= kubus.clone();createKubus(stairs5,60, 95, -490);
+    let stairs6= kubus.clone();createKubus(stairs6,90, 95, -490);
+    let stairs7= kubus.clone();createKubus(stairs7,120, 95, -490);
+    let stairs15= kubus.clone();createKubus(stairs15,150, 95, -490);
+    let stairs16= kubus.clone();createKubus(stairs16,180, 95, -490);
+      //tangga stage 2
+      let stairs8= kubus.clone();createKubus(stairs8,-30, 125, -520);
+      let stairs9= kubus.clone();createKubus(stairs9,0, 125, -520);
+      let stairs10= kubus.clone();createKubus(stairs10,30, 125, -520);
+      let stairs11= kubus.clone();createKubus(stairs11,-60, 125, -520);
+      let stairs12= kubus.clone();createKubus(stairs12,60, 125, -520);
+      let stairs13= kubus.clone();createKubus(stairs13,90, 125, -520);
+      let stairs14= kubus.clone();createKubus(stairs14,120, 125, -520);
+      let stairs17= kubus.clone();createKubus(stairs17,150, 125, -520);
+      let stairs18= kubus.clone();createKubus(stairs18,180, 125, -520);
+    //stage
+    let geo = new THREE.BoxGeometry(270,30,200);
+    // let texture = new THREE.MeshLambertMaterial({color:ssrgb(0,0,250)'});
+    let wood = new THREE.MeshLambertMaterial({map: loader.load('texture/wood1.jpg')});
+    let cube = new THREE.Mesh(geo, wood);
+    createKubus(cube,60, 155, -610);
 
 }
+
+
 
 function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -364,26 +333,16 @@ function animate() {
             controls.getObject().position.y = 10;
             canJump = true;
 		}
-        //kubus1
         if ( controls.getObject().position.y < 30 && controls.getObject().position.x < -15 && controls.getObject().position.x > -45 && controls.getObject().position.z > -45 && controls.getObject().position.z < -15) {
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
 		}
-        //kubus2
-        if ( controls.getObject().position.y < 50 && controls.getObject().position.x > 15 && controls.getObject().position.x < 45 && controls.getObject().position.z > -70 && controls.getObject().position.z < -40) {
-            velocity.x = -velocity.x * 3;
-            velocity.z = -velocity.z * 3;
-		}
-        //kubus9
-        if ( controls.getObject().position.y < 60 && controls.getObject().position.x < -15 && controls.getObject().position.x > -45 && controls.getObject().position.z > -255 && controls.getObject().position.z < -225) {
-            velocity.x = -velocity.x * 3;
-            velocity.z = -velocity.z * 3;
-		}
-        //4 kubus
-        if ( controls.getObject().position.y < 80 && controls.getObject().position.y > 20 && controls.getObject().position.x < 5 && controls.getObject().position.x > -55 && controls.getObject().position.z > -345 && controls.getObject().position.z < -285) {
-            velocity.x = -velocity.x * 3;
-            velocity.z = -velocity.z * 3;
-            velocity.y = -velocity.y * 1.05;
+        if ( controls.getObject().position.y < 60 && controls.getObject().position.y > 30 && controls.getObject().position.x >15 && controls.getObject().position.x < 45 && controls.getObject().position.z > -90 && controls.getObject().position.z < -60) {
+            if(controls.getObject().position.y > 15) velocity.y = -velocity.y * -1;
+            else{
+                velocity.x = -velocity.x * 3;
+                velocity.z = -velocity.z * 3;
+            }
 		}
     }
 
