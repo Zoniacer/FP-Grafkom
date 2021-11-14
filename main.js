@@ -114,7 +114,7 @@ function init() {
 				moveRight = false;
 				break;            
             case 'KeyR':
-                run = 1;
+                run = 2;
                 break;
 		}
     };
@@ -158,9 +158,9 @@ function init() {
 
     // }
 
-    var groundTexture = new THREE.TextureLoader().load("texture/Grass.jpg");
+    var groundTexture = new THREE.TextureLoader().load("texture/img.jpg");
     groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
-    groundTexture.repeat.set( 200, 200 );
+    groundTexture.repeat.set( 30, 30 );
     groundTexture.anisotropy = 16;
     groundTexture.encoding = THREE.sRGBEncoding;
 
@@ -198,31 +198,19 @@ function createText() {
         } );
 
         const matLite = new THREE.MeshBasicMaterial( {
-            color: color,
-            transparent: true,
-            opacity: 0.4,
+            color: 0x000000,
+ 
             side: THREE.DoubleSide
         } );
 
         const message = "Level 1";
 
-        const shapes = font.generateShapes( message, 100 );
-
+        const shapes = font.generateShapes( message, 70 );
         const geometry = new THREE.ShapeGeometry( shapes );
-
         geometry.computeBoundingBox();
-
         const xMid = - 0.5 * ( geometry.boundingBox.max.x - geometry.boundingBox.min.x );
 
         geometry.translate( xMid, 0, 0 );
-
-        // make shape ( N.B. edge view not visible )
-
-        //const text = new THREE.Mesh( geometry, matLite );
-        //text.position.set(-45,100,-150)
-        //scene.add( text );
-
-        // make line shape ( N.B. edge view remains visible )
 
         const holeShapes = [];
 
@@ -260,9 +248,13 @@ function createText() {
             lineText.add( lineMesh );
 
         }
-        lineText.position.set(0, 100, -140)
+        lineText.position.set(0, 100, -240)
         scene.add( lineText );
-
+        let shapes_podium = font.generateShapes( "What is the meaning of life", 20 );
+        let geometry_podium = new THREE.ShapeGeometry( shapes_podium );
+        let podiumText = new THREE.Mesh( geometry_podium, matLite );
+        podiumText.position.set(-120, 235, -780)
+        scene.add( podiumText );
     } );
 
 }
@@ -276,67 +268,91 @@ function createPlatforms(){
     const loadManager = new THREE.LoadingManager();
     const loader = new THREE.TextureLoader(loadManager);
     let geometry = new THREE.BoxGeometry(30,30,30);
-    // let texture = new THREE.MeshLambertMaterial({color:'rgb(0,0,250)'});
+    // let texture = new THREE.MeshLambertMaterial({color:'rgb(0,0,250)'});10.6
     let texture = new THREE.MeshLambertMaterial({map: loader.load('texture/wood1.jpg')});
-    let kubus = new THREE.Mesh(geometry, texture);createKubus(kubus,-30,15,-30);//1st cube
-    let kubus2 = kubus.clone();createKubus(kubus2,30, 35, -55);
+
+    let kubus = new THREE.Mesh(geometry, texture);createKubus(kubus,-30,15,-130);//1st cube
+
+    let kubus2 = kubus.clone();createKubus(kubus2,30, 35, -155);
     //3kubus kiri
-    let kubus3 = kubus.clone();createKubus(kubus3,-30, 45, -110);
-    let kubus4 = kubus.clone();createKubus(kubus4,0, 45, -110);
-    let kubus5 = kubus.clone();createKubus(kubus5,-30, 45, -140);
+    let kubus3 = kubus.clone();createKubus(kubus3,-30, 45, -210);
+    let kubus4 = kubus.clone();createKubus(kubus4,0, 45, -210);
+    let kubus5 = kubus.clone();createKubus(kubus5,-30, 45, -240);
     //3kubus kanan
-    let kubus6 = kubus.clone();createKubus(kubus6,50, 55, -180);
-    let kubus7 = kubus.clone();createKubus(kubus7,50, 55, -210);
-    let kubus8 = kubus.clone();createKubus(kubus8,20, 55, -180);
+    let kubus6 = kubus.clone();createKubus(kubus6,50, 55, -280);
+    let kubus7 = kubus.clone();createKubus(kubus7,50, 55, -310);
+    let kubus8 = kubus.clone();createKubus(kubus8,20, 55, -280);
     //tower kubus kiri
-    let kubus9 = kubus.clone();createKubus(kubus9,-30, 15, -240);
-    let kubus10 = kubus.clone();createKubus(kubus10,-30, 45, -240);
+    let kubus9 = kubus.clone();createKubus(kubus9,-30, 15, -340);
+    let kubus10 = kubus.clone();createKubus(kubus10,-30, 45, -340);
     // 4kubus kiri
-    let kubus11 = kubus.clone();createKubus(kubus11,-40, 65, -300);
-    let kubus11b = kubus.clone();createKubus(kubus11b,-40, 35, -300);
-    let kubus14 = kubus.clone();createKubus(kubus14,-10, 65, -300);
-    let kubus14b = kubus.clone();createKubus(kubus14b,-10, 35, -300);
-    let kubus12= kubus.clone();createKubus(kubus12,-40, 65, -330);
-    let kubus12b= kubus.clone();createKubus(kubus12b,-40, 35, -330);
-    let kubus13= kubus.clone();createKubus(kubus13,-10, 65, -330);
-    let kubus13b= kubus.clone();createKubus(kubus13b,-10, 35, -330);
+    let kubus11 = kubus.clone();createKubus(kubus11,-40, 65, -400);
+    let kubus11b = kubus.clone();createKubus(kubus11b,-40, 35, -400);
+    let kubus14 = kubus.clone();createKubus(kubus14,-10, 65, -400);
+    let kubus14b = kubus.clone();createKubus(kubus14b,-10, 35, -400);
+    let kubus12= kubus.clone();createKubus(kubus12,-40, 65, -430);
+    let kubus12b= kubus.clone();createKubus(kubus12b,-40, 35, -430);
+    let kubus13= kubus.clone();createKubus(kubus13,-10, 65, -430);
+    let kubus13b= kubus.clone();createKubus(kubus13b,-10, 35, -430);
     // 3kubus kanan
-    let kubus15= kubus.clone();createKubus(kubus15,50, 75, -360); 
-    let kubus16= kubus.clone();createKubus(kubus16,80, 75, -360);
-    let kubus16b= kubus.clone();createKubus(kubus16b,110, 75, -360);
+    let kubus15= kubus.clone();createKubus(kubus15,50, 75, -460); 
+    let kubus16= kubus.clone();createKubus(kubus16,80, 75, -460);
+    let kubus16b= kubus.clone();createKubus(kubus16b,110, 75, -460);
     //6kubus kiri sebelum stage
-    let kubus17= kubus.clone();createKubus(kubus17,0, 95, -400);
-    let kubus18= kubus.clone();createKubus(kubus18,-30, 95, -400);
-    let kubus22= kubus.clone();createKubus(kubus22,-60, 95, -400);
-    let kubus19= kubus.clone();createKubus(kubus19,0, 95, -430);
-    let kubus20= kubus.clone();createKubus(kubus20,-30, 95, -430);
-    let kubus21= kubus.clone();createKubus(kubus21,-60, 95, -430);
+    let kubus17= kubus.clone();createKubus(kubus17,0, 95, -500);
+    let kubus18= kubus.clone();createKubus(kubus18,-30, 95, -500);
+    let kubus22= kubus.clone();createKubus(kubus22,-60, 95, -500);
+    let kubus19= kubus.clone();createKubus(kubus19,0, 95, -530);
+    let kubus20= kubus.clone();createKubus(kubus20,-30, 95, -530);
+    let kubus21= kubus.clone();createKubus(kubus21,-60, 95, -530);
     //tangga stage 1
-    let stairs= kubus.clone();createKubus(stairs,-30, 95, -490);
-    let stairs2= kubus.clone();createKubus(stairs2,0, 95, -490);
-    let stairs3= kubus.clone();createKubus(stairs3,30, 95, -490);
-    let stairs4= kubus.clone();createKubus(stairs4,-60, 95, -490);
-    let stairs5= kubus.clone();createKubus(stairs5,60, 95, -490);
-    let stairs6= kubus.clone();createKubus(stairs6,90, 95, -490);
-    let stairs7= kubus.clone();createKubus(stairs7,120, 95, -490);
-    let stairs15= kubus.clone();createKubus(stairs15,150, 95, -490);
-    let stairs16= kubus.clone();createKubus(stairs16,180, 95, -490);
+    let stairs= kubus.clone();createKubus(stairs,-30, 95, -590);
+    let stairs2= kubus.clone();createKubus(stairs2,0, 95, -590);
+    let stairs3= kubus.clone();createKubus(stairs3,30, 95, -590);
+    let stairs4= kubus.clone();createKubus(stairs4,-60, 95, -590);
+    let stairs5= kubus.clone();createKubus(stairs5,60, 95, -590);
+    let stairs6= kubus.clone();createKubus(stairs6,90, 95, -590);
+    let stairs7= kubus.clone();createKubus(stairs7,120, 95, -590);
+    let stairs15= kubus.clone();createKubus(stairs15,150, 95, -590);
+    let stairs16= kubus.clone();createKubus(stairs16,180, 95, -590);
       //tangga stage 2
-      let stairs8= kubus.clone();createKubus(stairs8,-30, 125, -520);
-      let stairs9= kubus.clone();createKubus(stairs9,0, 125, -520);
-      let stairs10= kubus.clone();createKubus(stairs10,30, 125, -520);
-      let stairs11= kubus.clone();createKubus(stairs11,-60, 125, -520);
-      let stairs12= kubus.clone();createKubus(stairs12,60, 125, -520);
-      let stairs13= kubus.clone();createKubus(stairs13,90, 125, -520);
-      let stairs14= kubus.clone();createKubus(stairs14,120, 125, -520);
-      let stairs17= kubus.clone();createKubus(stairs17,150, 125, -520);
-      let stairs18= kubus.clone();createKubus(stairs18,180, 125, -520);
+    let stairs8= kubus.clone();createKubus(stairs8,-30, 125, -620);
+    let stairs9= kubus.clone();createKubus(stairs9,0, 125, -620);
+    let stairs10= kubus.clone();createKubus(stairs10,30, 125, -620);
+    let stairs11= kubus.clone();createKubus(stairs11,-60, 125, -620);
+    let stairs12= kubus.clone();createKubus(stairs12,60, 125, -620);
+    let stairs13= kubus.clone();createKubus(stairs13,90, 125, -620);
+    let stairs14= kubus.clone();createKubus(stairs14,120, 125, -620);
+    let stairs17= kubus.clone();createKubus(stairs17,150, 125, -620);
+    let stairs18= kubus.clone();createKubus(stairs18,180, 125, -620);
+
+    //pillar kanan
+    let geometry_pillar = new THREE.CylinderGeometry( 15, 15, 30, 30 );
+    let texture_pillar = new THREE.MeshLambertMaterial({map: loader.load('texture/pillar.jpg')});
+    let pillar = new THREE.Mesh(geometry, texture_pillar);createKubus(pillar,210, 5, -645);//1st pillar
+    let pillar2 = pillar.clone();createKubus(pillar2,210, 35, -645);
+    let pillar3 = pillar.clone();createKubus(pillar3, 210, 65, -645);
+    let pillar4 = pillar.clone();createKubus(pillar4,210, 95, -645);
+    let pillar5 = pillar.clone();createKubus(pillar5,210, 125, -645);
+    let pillar6 = pillar.clone();createKubus(pillar6,210, 155, -645);
+    let pillar7 = pillar.clone();createKubus(pillar7,210, 185, -645);
+    let pillar8 = pillar.clone();createKubus(pillar8,210, 215, -645);
+    let pillar9 = pillar.clone();createKubus(pillar9,210, 245, -645);
+
+    let pillarArray=[10];
+    //pillar kiri
+    for (let i = 0; i < 9; i++) {
+        pillarArray[i]=pillar.clone();
+        createKubus(pillarArray[i],-90, 5+i*30, -645);
+      }
+
+
     //stage
     let geo = new THREE.BoxGeometry(270,30,200);
     // let texture = new THREE.MeshLambertMaterial({color:ssrgb(0,0,250)'});
     let wood = new THREE.MeshLambertMaterial({map: loader.load('texture/wood1.jpg')});
     let cube = new THREE.Mesh(geo, wood);
-    createKubus(cube,60, 155, -630);
+    createKubus(cube,60, 155, -730);
 
 }
 
@@ -381,28 +397,28 @@ function animate() {
             controls.getObject().position.y = 10;
             canJump = true;
 		}
-        if ( controls.getObject().position.y < 30 && controls.getObject().position.x < -15 && controls.getObject().position.x > -45 && controls.getObject().position.z > -45 && controls.getObject().position.z < -15) {
+        if ( controls.getObject().position.y < 30 && controls.getObject().position.x < -15 && controls.getObject().position.x > -45 && controls.getObject().position.z > -145 && controls.getObject().position.z < -115) {
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
 		}
-        if ( controls.getObject().position.y < 60 && controls.getObject().position.y > 30 && controls.getObject().position.x >15 && controls.getObject().position.x < 45 && controls.getObject().position.z > -90 && controls.getObject().position.z < -60) {
+        if ( controls.getObject().position.y < 60 && controls.getObject().position.y > 30 && controls.getObject().position.x >15 && controls.getObject().position.x < 45 && controls.getObject().position.z > -190 && controls.getObject().position.z < -160) {
             if(controls.getObject().position.y > 15) velocity.y = -velocity.y * -1;
             else{
                 velocity.x = -velocity.x * 3;
                 velocity.z = -velocity.z * 3;
             }
 		}
-        if ( controls.getObject().position.y < 50 && controls.getObject().position.x > 15 && controls.getObject().position.x < 45 && controls.getObject().position.z > -70 && controls.getObject().position.z < -40) {
+        if ( controls.getObject().position.y < 50 && controls.getObject().position.x > 15 && controls.getObject().position.x < 45 && controls.getObject().position.z > -170 && controls.getObject().position.z < -140) {
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
 		}
         //kubus9
-        if ( controls.getObject().position.y < 60 && controls.getObject().position.x < -15 && controls.getObject().position.x > -45 && controls.getObject().position.z > -255 && controls.getObject().position.z < -225) {
+        if ( controls.getObject().position.y < 60 && controls.getObject().position.x < -15 && controls.getObject().position.x > -45 && controls.getObject().position.z > -355 && controls.getObject().position.z < -325) {
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
 		}
         //4 kubus
-        if ( controls.getObject().position.y < 80 && controls.getObject().position.y > 20 && controls.getObject().position.x < 5 && controls.getObject().position.x > -55 && controls.getObject().position.z > -345 && controls.getObject().position.z < -285) {
+        if ( controls.getObject().position.y < 80 && controls.getObject().position.y > 20 && controls.getObject().position.x < 5 && controls.getObject().position.x > -55 && controls.getObject().position.z > -445 && controls.getObject().position.z < -385) {
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
             velocity.y = -velocity.y * 1.05;
