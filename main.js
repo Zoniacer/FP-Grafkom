@@ -131,8 +131,7 @@ function init() {
     raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 );
 
     // floor
-
-    let floorGeometry = new THREE.PlaneGeometry( 2000, 2000 );
+    let floorGeometry = new THREE.PlaneGeometry( 5000, 5000 );
     floorGeometry.rotateX( - Math.PI / 2 );
 
     // vertex displacement
@@ -325,11 +324,13 @@ function createPlatforms(){
     let stairs14= kubus.clone();createKubus(stairs14,120, 125, -620);
     let stairs17= kubus.clone();createKubus(stairs17,150, 125, -620);
     let stairs18= kubus.clone();createKubus(stairs18,180, 125, -620);
-
+ 
     //pillar kanan
     let geometry_pillar = new THREE.CylinderGeometry( 15, 15, 30, 30 );
     let texture_pillar = new THREE.MeshLambertMaterial({map: loader.load('texture/pillar.jpg')});
-    let pillar = new THREE.Mesh(geometry, texture_pillar);createKubus(pillar,210, 5, -645);//1st pillar
+    let pillar = new THREE.Mesh(geometry_pillar, texture_pillar)
+    // let pillar = new THREE.Mesh(geometry, texture_pillar);createKubus(pillar,210, 5, -645);//1st pillar
+    let pillar1 = pillar.clone();createKubus(pillar1,210, 5, -645);
     let pillar2 = pillar.clone();createKubus(pillar2,210, 35, -645);
     let pillar3 = pillar.clone();createKubus(pillar3, 210, 65, -645);
     let pillar4 = pillar.clone();createKubus(pillar4,210, 95, -645);
@@ -348,12 +349,14 @@ function createPlatforms(){
 
 
     //stage
-    let geo = new THREE.BoxGeometry(270,30,200);
+    let geo = new THREE.BoxGeometry(270,30,270);
     // let texture = new THREE.MeshLambertMaterial({color:ssrgb(0,0,250)'});
     let wood = new THREE.MeshLambertMaterial({map: loader.load('texture/wood1.jpg')});
     let cube = new THREE.Mesh(geo, wood);
-    createKubus(cube,60, 155, -730);
+    createKubus(cube,60, 155, -770);
 
+    //pintu2
+    //bagian atas
 }
 
 
