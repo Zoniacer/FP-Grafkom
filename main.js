@@ -20,6 +20,11 @@ const direction = new THREE.Vector3();
 const vertex = new THREE.Vector3();
 const color = new THREE.Color();
 
+let Score = 10;
+let currentScore = 0;
+let elementScore = document.getElementById("score");
+let level1clear = 0;
+
 init();
 animate();
 
@@ -114,7 +119,7 @@ function init() {
 				moveRight = false;
 				break;            
             case 'KeyR':
-                run = 2;
+                run = 1;
                 break;
 		}
     };
@@ -425,6 +430,12 @@ function animate() {
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
             velocity.y = -velocity.y * 1.05;
+		}
+        if (level1clear==0 && controls.getObject().position.y < 200 && controls.getObject().position.y > 155 && controls.getObject().position.x < 195 && controls.getObject().position.x > -75 && controls.getObject().position.z > -905 && controls.getObject().position.z < -770) {
+            currentScore += Score;
+            console.log(currentScore);
+            elementScore.innerHTML = currentScore;
+            level1clear=2;
 		}
     }
 

@@ -26,6 +26,12 @@
 				font-size: 14px;
 				cursor: pointer;
 			}
+			.scoreboard {
+				position: absolute;
+				padding: 20px;
+				margin: 10px;
+				font-size: 1.5rem;
+			}
 		</style>
 	</head>
 	<body onload="main()">
@@ -43,7 +49,9 @@
 				</p>
 			</div>
 		</div>
-
+		<div class="scoreboard">
+			<p>Score : <span id="score">0</span></p>
+		</div>
 		<script type="module" src="main.js"></script>
 	</body>
 </html>
