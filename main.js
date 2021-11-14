@@ -1,6 +1,6 @@
 import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/build/three.module.js';
 import {PointerLockControls} from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/controls/PointerLockControls.js';
-
+import { FontLoader } from './jsm/loaders/FontLoader.js';
 let camera, scene, renderer, controls;
 
 const objects = [];
@@ -176,7 +176,7 @@ function init() {
     //scene.add( floor2 );
     // objects
     createPlatforms()
-
+    createText()
     //
     renderer = new THREE.WebGLRenderer( { antialias: true } );
     renderer.setPixelRatio( window.devicePixelRatio );
@@ -187,35 +187,83 @@ function init() {
 
 }
 function createText() {
+    const loader = new FontLoader();
+    loader.load( 'fonts/helvetiker_regular.typeface.json', function ( font ) {
 
-    textGeo = new TextGeometry( "Halo", {
+        const color = 0x006699;
 
-        font: font,
+        const matDark = new THREE.LineBasicMaterial( {
+            color: color,
+            side: THREE.DoubleSide
+        } );
 
-        size: size,
-        height: height,
-        curveSegments: curveSegments,
+        const matLite = new THREE.MeshBasicMaterial( {
+            color: color,
+            transparent: true,
+            opacity: 0.4,
+            side: THREE.DoubleSide
+        } );
 
-        bevelThickness: bevelThickness,
-        bevelSize: bevelSize,
-        bevelEnabled: bevelEnabled
+        const message = "Level 1";
+
+        const shapes = font.generateShapes( message, 100 );
+
+        const geometry = new THREE.ShapeGeometry( shapes );
+
+        geometry.computeBoundingBox();
+
+        const xMid = - 0.5 * ( geometry.boundingBox.max.x - geometry.boundingBox.min.x );
+
+        geometry.translate( xMid, 0, 0 );
+
+        // make shape ( N.B. edge view not visible )
+
+        //const text = new THREE.Mesh( geometry, matLite );
+        //text.position.set(-45,100,-150)
+        //scene.add( text );
+
+        // make line shape ( N.B. edge view remains visible )
+
+        const holeShapes = [];
+
+        for ( let i = 0; i < shapes.length; i ++ ) {
+
+            const shape = shapes[ i ];
+
+            if ( shape.holes && shape.holes.length > 0 ) {
+
+                for ( let j = 0; j < shape.holes.length; j ++ ) {
+
+                    const hole = shape.holes[ j ];
+                    holeShapes.push( hole );
+
+                }
+
+            }
+
+        }
+
+        shapes.push.apply( shapes, holeShapes );
+
+        const lineText = new THREE.Object3D();
+
+        for ( let i = 0; i < shapes.length; i ++ ) {
+
+            const shape = shapes[ i ];
+
+            const points = shape.getPoints();
+            const geometry = new THREE.BufferGeometry().setFromPoints( points );
+
+            geometry.translate( xMid, 0, 0 );
+
+            const lineMesh = new THREE.Line( geometry, matDark );
+            lineText.add( lineMesh );
+
+        }
+        lineText.position.set(0, 100, -140)
+        scene.add( lineText );
 
     } );
-
-    textGeo.computeBoundingBox();
-
-    const centerOffset = - 0.5 * ( textGeo.boundingBox.max.x - textGeo.boundingBox.min.x );
-
-    textMesh1 = new THREE.Mesh( textGeo, materials );
-
-    textMesh1.position.x = centerOffset;
-    textMesh1.position.y = hover;
-    textMesh1.position.z = 0;
-
-    textMesh1.rotation.x = 0;
-    textMesh1.rotation.y = Math.PI * 2;
-
-    group.add( textMesh1 );
 
 }
 
@@ -343,6 +391,21 @@ function animate() {
                 velocity.x = -velocity.x * 3;
                 velocity.z = -velocity.z * 3;
             }
+		}
+        if ( controls.getObject().position.y < 50 && controls.getObject().position.x > 15 && controls.getObject().position.x < 45 && controls.getObject().position.z > -70 && controls.getObject().position.z < -40) {
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+		}
+        //kubus9
+        if ( controls.getObject().position.y < 60 && controls.getObject().position.x < -15 && controls.getObject().position.x > -45 && controls.getObject().position.z > -255 && controls.getObject().position.z < -225) {
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+		}
+        //4 kubus
+        if ( controls.getObject().position.y < 80 && controls.getObject().position.y > 20 && controls.getObject().position.x < 5 && controls.getObject().position.x > -55 && controls.getObject().position.z > -345 && controls.getObject().position.z < -285) {
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+            velocity.y = -velocity.y * 1.05;
 		}
     }
 
