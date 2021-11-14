@@ -254,13 +254,33 @@ function createText() {
         }
         lineText.position.set(0, 100, -240)
         scene.add( lineText );
-        let shapes_podium = font.generateShapes( "What is the meaning of life", 20 );
+        let shapes_podium = font.generateShapes( "What is the meaning of life", 5 );
         let geometry_podium = new THREE.ShapeGeometry( shapes_podium );
         let podiumText = new THREE.Mesh( geometry_podium, matLite );
-        podiumText.position.set(-120, 235, -780)
-        scene.add( podiumText );
+        createPositionText(podiumText,20, 200, -750);
+        let shapes_pilihan_a = font.generateShapes( "Nothing", 2 );
+        let geometry_pilihan_a = new THREE.ShapeGeometry( shapes_pilihan_a );
+        let pilihan_a = new THREE.Mesh( geometry_pilihan_a, matLite );
+        createPositionText(pilihan_a,0, 210, -875);
+        let shapes_pilihan_b = font.generateShapes( "Happiness", 2 );
+        let geometry_pilihan_b = new THREE.ShapeGeometry( shapes_pilihan_b );
+        let pilihan_b = new THREE.Mesh( geometry_pilihan_b, matLite );
+        createPositionText(pilihan_b,40, 210, -875);
+        let shapes_pilihan_c = font.generateShapes( "Searching", 2 );
+        let geometry_pilihan_c = new THREE.ShapeGeometry( shapes_pilihan_c );
+        let pilihan_c = new THREE.Mesh( geometry_pilihan_c, matLite );
+        createPositionText(pilihan_c,80, 210, -875);
+        let shapes_pilihan_d = font.generateShapes( "Freedom", 2 );
+        let geometry_pilihan_d = new THREE.ShapeGeometry( shapes_pilihan_d );
+        let pilihan_d = new THREE.Mesh( geometry_pilihan_d, matLite );
+        createPositionText(pilihan_d,120, 210, -875);
     } );
 
+}
+
+function createPositionText(text, x,y,z){
+    text.position.set(x,y,z);
+    scene.add( text );
 }
 
 function createKubus(kubus, x,y,z){
@@ -335,15 +355,12 @@ function createPlatforms(){
     let texture_pillar = new THREE.MeshLambertMaterial({map: loader.load('texture/pillar.jpg')});
     let pillar = new THREE.Mesh(geometry_pillar, texture_pillar)
     // let pillar = new THREE.Mesh(geometry, texture_pillar);createKubus(pillar,210, 5, -645);//1st pillar
-    let pillar1 = pillar.clone();createKubus(pillar1,210, 5, -645);
-    let pillar2 = pillar.clone();createKubus(pillar2,210, 35, -645);
-    let pillar3 = pillar.clone();createKubus(pillar3, 210, 65, -645);
-    let pillar4 = pillar.clone();createKubus(pillar4,210, 95, -645);
-    let pillar5 = pillar.clone();createKubus(pillar5,210, 125, -645);
-    let pillar6 = pillar.clone();createKubus(pillar6,210, 155, -645);
-    let pillar7 = pillar.clone();createKubus(pillar7,210, 185, -645);
-    let pillar8 = pillar.clone();createKubus(pillar8,210, 215, -645);
-    let pillar9 = pillar.clone();createKubus(pillar9,210, 245, -645);
+
+   let pillarArray2=[10];
+    for (let i = 0; i < 9; i++) {
+        pillarArray2[i]=pillar.clone();
+        createKubus(pillarArray2[i],210, 5+i*30, -645);
+      }
 
     let pillarArray=[10];
     //pillar kiri
