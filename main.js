@@ -448,6 +448,16 @@ function animate() {
             velocity.z = -velocity.z * 3;
             velocity.y = -velocity.y * 1.05;
 		}
+        //Tangga Stage
+        if ( controls.getObject().position.y > 110 && controls.getObject().position.y < 140 && controls.getObject().position.x < 195 && controls.getObject().position.x > -75 && controls.getObject().position.z < -605 && controls.getObject().position.z > -635) {
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+		}
+        if ( controls.getObject().position.y > 140 && controls.getObject().position.y < 170 && controls.getObject().position.x < 195 && controls.getObject().position.x > -75 && controls.getObject().position.z < -635 && controls.getObject().position.z > -905) {
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+		}
+        //score
         if (level1clear==0 && controls.getObject().position.y < 200 && controls.getObject().position.y > 155 && controls.getObject().position.x < 195 && controls.getObject().position.x > -75 && controls.getObject().position.z > -905 && controls.getObject().position.z < -770) {
             currentScore += Score;
             console.log(currentScore);
