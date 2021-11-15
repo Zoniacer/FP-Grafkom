@@ -94,7 +94,7 @@ function init() {
 				canJump = false;
 				break;
 
-            case 'KeyR':
+            case 'ShiftLeft':
                 run = 2;
                 break;
 		}
@@ -118,7 +118,7 @@ function init() {
 			case 'KeyD':
 				moveRight = false;
 				break;            
-            case 'KeyR':
+            case 'ShiftLeft':
                 run = 1;
                 break;
 		}
@@ -288,6 +288,7 @@ function createKubus(kubus, x,y,z){
     scene.add(kubus);
     objects.push(kubus);
 }
+
 function createPlatforms(){
     const loadManager = new THREE.LoadingManager();
     const loader = new THREE.TextureLoader(loadManager);
@@ -381,12 +382,20 @@ function createPlatforms(){
     //bagian atas
 }
 
-
-
 function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize( window.innerWidth, window.innerHeight );
+}
+
+function inputCollision(controls, x,y,z, panjang){
+    panjang=panjang/2;
+    if(controls.getObject().position.y < y+panjang && controls.getObject().position.y > y-panjang 
+    && controls.getObject().position.x > x-panjang && controls.getObject().position.x < x+panjang 
+    && controls.getObject().position.z > z-panjang && controls.getObject().position.z < z+panjang){
+        return true;
+    }
+    else return false;
 }
 
 function animate() {
@@ -398,6 +407,7 @@ function animate() {
         
         const intersections = raycaster.intersectObjects( objects, true );
         const onObject = intersections.length > 0;
+//        const frontObject = intersections.length.BoxGeometry > 0;
         const delta = ( time - prevTime ) / 1000;
         velocity.x -= velocity.x * 10.0 * delta;
         velocity.z -= velocity.z * 10.0 * delta;
@@ -413,6 +423,13 @@ function animate() {
 			velocity.y = Math.max( 0, velocity.y );
 			canJump = true;
         }
+        /*
+        if ( frontObject === true ) {
+			velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+			canJump = true;
+        }
+        */
 
         controls.moveRight( - velocity.x * delta );
         controls.moveForward( - velocity.z * delta );
@@ -422,16 +439,16 @@ function animate() {
             controls.getObject().position.y = 10;
             canJump = true;
 		}
-        if ( controls.getObject().position.y < 30 && controls.getObject().position.x < -15 && controls.getObject().position.x > -45 && controls.getObject().position.z > -145 && controls.getObject().position.z < -115) {
+        
+        if ( inputCollision(controls, -30,15,-130,30)==true) {
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
 		}
         if ( controls.getObject().position.y < 60 && controls.getObject().position.y > 30 && controls.getObject().position.x >15 && controls.getObject().position.x < 45 && controls.getObject().position.z > -190 && controls.getObject().position.z < -160) {
-            if(controls.getObject().position.y > 15) velocity.y = -velocity.y * -1;
-            else{
+                velocity.y = -velocity.y;
                 velocity.x = -velocity.x * 3;
                 velocity.z = -velocity.z * 3;
-            }
+            
 		}
         if ( controls.getObject().position.y < 50 && controls.getObject().position.x > 15 && controls.getObject().position.x < 45 && controls.getObject().position.z > -170 && controls.getObject().position.z < -140) {
             velocity.x = -velocity.x * 3;
@@ -457,6 +474,7 @@ function animate() {
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
 		}
+        
         //score
         if (level1clear==0 && controls.getObject().position.y < 200 && controls.getObject().position.y > 155 && controls.getObject().position.x < 195 && controls.getObject().position.x > -75 && controls.getObject().position.z > -905 && controls.getObject().position.z < -770) {
             currentScore += Score;
