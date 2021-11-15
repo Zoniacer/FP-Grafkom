@@ -330,55 +330,56 @@ function createPlatforms(){
     let kubus20= kubus.clone();createKubus(kubus20,-30, 95, -530);
     let kubus21= kubus.clone();createKubus(kubus21,-60, 95, -530);
     //tangga stage 1
-    let stairs= kubus.clone();createKubus(stairs,-30, 95, -590);
-    let stairs2= kubus.clone();createKubus(stairs2,0, 95, -590);
-    let stairs3= kubus.clone();createKubus(stairs3,30, 95, -590);
-    let stairs4= kubus.clone();createKubus(stairs4,-60, 95, -590);
-    let stairs5= kubus.clone();createKubus(stairs5,60, 95, -590);
-    let stairs6= kubus.clone();createKubus(stairs6,90, 95, -590);
-    let stairs7= kubus.clone();createKubus(stairs7,120, 95, -590);
-    let stairs15= kubus.clone();createKubus(stairs15,150, 95, -590);
-    let stairs16= kubus.clone();createKubus(stairs16,180, 95, -590);
-      //tangga stage 2
-    let stairs8= kubus.clone();createKubus(stairs8,-30, 125, -620);
-    let stairs9= kubus.clone();createKubus(stairs9,0, 125, -620);
-    let stairs10= kubus.clone();createKubus(stairs10,30, 125, -620);
-    let stairs11= kubus.clone();createKubus(stairs11,-60, 125, -620);
-    let stairs12= kubus.clone();createKubus(stairs12,60, 125, -620);
-    let stairs13= kubus.clone();createKubus(stairs13,90, 125, -620);
-    let stairs14= kubus.clone();createKubus(stairs14,120, 125, -620);
-    let stairs17= kubus.clone();createKubus(stairs17,150, 125, -620);
-    let stairs18= kubus.clone();createKubus(stairs18,180, 125, -620);
- 
-    //pillar kanan
+    let stairs_arr=[11];
+    for (let i = 0; i < 10; i++) {
+        stairs_arr[i]=kubus.clone();
+        if(i==9) createKubus(stairs_arr[i],205, 95, -590);
+        else createKubus(stairs_arr[i],-60+i*30, 95, -590);
+    }
+    //tangga stage 2
+    let stairs_arr2=[11];
+    for (let i = 0; i < 10; i++) {
+        stairs_arr2[i]=kubus.clone();
+        if(i==9) createKubus(stairs_arr2[i],205,125, -620);
+        else createKubus(stairs_arr2[i],-60+i*30, 125, -620);
+    }
+     
+    //pillar 
     let geometry_pillar = new THREE.CylinderGeometry( 15, 15, 30, 30 );
     let texture_pillar = new THREE.MeshLambertMaterial({map: loader.load('texture/pillar.jpg')});
     let pillar = new THREE.Mesh(geometry_pillar, texture_pillar)
     // let pillar = new THREE.Mesh(geometry, texture_pillar);createKubus(pillar,210, 5, -645);//1st pillar
-
-   let pillarArray2=[10];
-    for (let i = 0; i < 9; i++) {
+    //pillar kanan
+    let pillarArray2=[10];
+    for (let i = 0; i < 8; i++) {
         pillarArray2[i]=pillar.clone();
-        createKubus(pillarArray2[i],210, 5+i*30, -645);
+        createKubus(pillarArray2[i],230, 5+i*30, -645);
       }
-
     let pillarArray=[10];
     //pillar kiri
-    for (let i = 0; i < 9; i++) {
+    for (let i = 0; i < 8; i++) {
         pillarArray[i]=pillar.clone();
         createKubus(pillarArray[i],-90, 5+i*30, -645);
       }
 
-
     //stage
-    let geo = new THREE.BoxGeometry(270,30,270);
+    let geo = new THREE.BoxGeometry(310,30,270);
     // let texture = new THREE.MeshLambertMaterial({color:ssrgb(0,0,250)'});
     let wood = new THREE.MeshLambertMaterial({map: loader.load('texture/wood1.jpg')});
     let cube = new THREE.Mesh(geo, wood);
-    createKubus(cube,60, 155, -770);
+    createKubus(cube,80, 155, -770);
 
-    //pintu2
-    //bagian atas
+    //atapnya pilar
+    const roof_geo = new THREE.TorusGeometry( 158, 15, 15,56,3.2 );
+    const roof_mat = new THREE.MeshLambertMaterial({map: loader.load('texture/pillar.jpg')});
+    const torus = new THREE.Mesh( roof_geo , roof_mat );
+    torus.position.set(70, 245, -645);
+    scene.add( torus );
+   
+    let pt_geo = new THREE.BoxGeometry(40,10,30);
+    let pt_mat = new THREE.MeshLambertMaterial({map: loader.load('texture/wood1.jpg')});
+    let pt = new THREE.Mesh(pt_geo, pt_mat);createKubus(pt,-90, 240, -645);
+    let pt2= pt.clone();createKubus(pt2,230, 240, -645);
 }
 
 
