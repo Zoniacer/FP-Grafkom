@@ -297,39 +297,44 @@ function createPlatforms(){
     let texture = new THREE.MeshLambertMaterial({map: loader.load('texture/wood1.jpg')});
 
     let kubus = new THREE.Mesh(geometry, texture);createKubus(kubus,-30,15,-130);//1st cube
-
     let kubus2 = kubus.clone();createKubus(kubus2,30, 35, -155);
     //3kubus kiri
-    let kubus3 = kubus.clone();createKubus(kubus3,-30, 45, -210);
-    let kubus4 = kubus.clone();createKubus(kubus4,0, 45, -210);
-    let kubus5 = kubus.clone();createKubus(kubus5,-30, 45, -240);
+    let cubes_arr=[3];
+    for (let i = 0; i < 3; i++) {
+        cubes_arr[i]=kubus.clone();
+        if(i==2) createKubus(cubes_arr[i],-60, 45, -240);
+        else createKubus(cubes_arr[i],-60+i*30, 45, -210);
+    }
     //3kubus kanan
-    let kubus6 = kubus.clone();createKubus(kubus6,50, 55, -280);
-    let kubus7 = kubus.clone();createKubus(kubus7,50, 55, -310);
-    let kubus8 = kubus.clone();createKubus(kubus8,20, 55, -280);
+    let cubes2_arr=[3];
+    for (let i = 0; i < 3; i++) {
+        cubes2_arr[i]=kubus.clone();
+        if(i==2) createKubus(cubes2_arr[i],50, 55, -310);
+        else createKubus(cubes2_arr[i],20+i*30, 55, -280);
+    }
     //tower kubus kiri
     let kubus9 = kubus.clone();createKubus(kubus9,-30, 15, -340);
     let kubus10 = kubus.clone();createKubus(kubus10,-30, 45, -340);
     // 4kubus kiri
-    let kubus11 = kubus.clone();createKubus(kubus11,-40, 65, -400);
     let kubus11b = kubus.clone();createKubus(kubus11b,-40, 35, -400);
-    let kubus14 = kubus.clone();createKubus(kubus14,-10, 65, -400);
+    let kubus11 = kubus.clone();createKubus(kubus11,-40, 65, -400);
     let kubus14b = kubus.clone();createKubus(kubus14b,-10, 35, -400);
-    let kubus12= kubus.clone();createKubus(kubus12,-40, 65, -430);
+    let kubus14 = kubus.clone();createKubus(kubus14,-10, 65, -400);
     let kubus12b= kubus.clone();createKubus(kubus12b,-40, 35, -430);
-    let kubus13= kubus.clone();createKubus(kubus13,-10, 65, -430);
+    let kubus12= kubus.clone();createKubus(kubus12,-40, 65, -430);
     let kubus13b= kubus.clone();createKubus(kubus13b,-10, 35, -430);
+    let kubus13= kubus.clone();createKubus(kubus13,-10, 65, -430);
     // 3kubus kanan
     let kubus15= kubus.clone();createKubus(kubus15,50, 75, -460); 
     let kubus16= kubus.clone();createKubus(kubus16,80, 75, -460);
     let kubus16b= kubus.clone();createKubus(kubus16b,110, 75, -460);
     //6kubus kiri sebelum stage
-    let kubus17= kubus.clone();createKubus(kubus17,0, 95, -500);
-    let kubus18= kubus.clone();createKubus(kubus18,-30, 95, -500);
-    let kubus22= kubus.clone();createKubus(kubus22,-60, 95, -500);
-    let kubus19= kubus.clone();createKubus(kubus19,0, 95, -530);
-    let kubus20= kubus.clone();createKubus(kubus20,-30, 95, -530);
-    let kubus21= kubus.clone();createKubus(kubus21,-60, 95, -530);
+    let bef_stage=[6];
+    for (let i = 0; i < 6; i++) {
+        bef_stage[i]=kubus.clone();
+        if(i<3) createKubus(bef_stage[i],-i*30, 95, -500);
+        else createKubus(bef_stage[i],-(i-3)*30, 95, -530);
+    }
     //tangga stage 1
     let stairs_arr=[11];
     for (let i = 0; i < 10; i++) {
