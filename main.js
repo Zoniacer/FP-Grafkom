@@ -254,26 +254,23 @@ function createText() {
         }
         lineText.position.set(0, 100, -240)
         scene.add( lineText );
+        let text_stage1=["Nothing", "Happiness", "Searching", "Freedom"];
+        let shape_stage1=[4];
+        let geometry_stage1=[4];
+        let mesh_stage1=[4];
+
         let shapes_podium = font.generateShapes( "What is the meaning of life", 5 );
         let geometry_podium = new THREE.ShapeGeometry( shapes_podium );
         let podiumText = new THREE.Mesh( geometry_podium, matLite );
         createPositionText(podiumText,20, 200, -750);
-        let shapes_pilihan_a = font.generateShapes( "Nothing", 2 );
-        let geometry_pilihan_a = new THREE.ShapeGeometry( shapes_pilihan_a );
-        let pilihan_a = new THREE.Mesh( geometry_pilihan_a, matLite );
-        createPositionText(pilihan_a,0, 210, -875);
-        let shapes_pilihan_b = font.generateShapes( "Happiness", 2 );
-        let geometry_pilihan_b = new THREE.ShapeGeometry( shapes_pilihan_b );
-        let pilihan_b = new THREE.Mesh( geometry_pilihan_b, matLite );
-        createPositionText(pilihan_b,40, 210, -875);
-        let shapes_pilihan_c = font.generateShapes( "Searching", 2 );
-        let geometry_pilihan_c = new THREE.ShapeGeometry( shapes_pilihan_c );
-        let pilihan_c = new THREE.Mesh( geometry_pilihan_c, matLite );
-        createPositionText(pilihan_c,80, 210, -875);
-        let shapes_pilihan_d = font.generateShapes( "Freedom", 2 );
-        let geometry_pilihan_d = new THREE.ShapeGeometry( shapes_pilihan_d );
-        let pilihan_d = new THREE.Mesh( geometry_pilihan_d, matLite );
-        createPositionText(pilihan_d,120, 210, -875);
+        
+        for (let i = 0; i < 4; i++) {
+            shape_stage1[i]=font.generateShapes( text_stage1[i], 2 );
+            geometry_stage1[i]=new THREE.ShapeGeometry( shape_stage1[i] );
+            mesh_stage1[i] = new THREE.Mesh( geometry_stage1[i], matLite );
+            createPositionText(mesh_stage1[i],0+40*i, 210, -875);
+        }
+        
     } );
 
 }
@@ -404,6 +401,18 @@ function inputCollision(controls, x,y,z, panjang){
     else return false;
 }
 
+function inputCollisionSpesifik(controls, x,y,z, panjang, lebar, tinggi){
+    panjang=panjang/2;
+    lebar=lebar/2;
+    tinggi=tinggi/2;
+    if(controls.getObject().position.y < y+tinggi && controls.getObject().position.y > y-tinggi 
+    && controls.getObject().position.x > x-panjang && controls.getObject().position.x < x+panjang 
+    && controls.getObject().position.z > z-lebar && controls.getObject().position.z < z+lebar){
+        return true;
+    }
+    else return false;
+}
+
 function animate() {
     requestAnimationFrame( animate );
     const time = performance.now();
@@ -445,20 +454,30 @@ function animate() {
             controls.getObject().position.y = 10;
             canJump = true;
 		}
-        
+        //1st box
         if ( inputCollision(controls, -30,15,-130,30)==true) {
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
 		}
-        if ( controls.getObject().position.y < 60 && controls.getObject().position.y > 30 && controls.getObject().position.x >15 && controls.getObject().position.x < 45 && controls.getObject().position.z > -190 && controls.getObject().position.z < -160) {
+        //2nd box
+        if ( inputCollision(controls, 30,35,-155,30)==true ) {
                 velocity.y = -velocity.y;
                 velocity.x = -velocity.x * 3;
                 velocity.z = -velocity.z * 3;
             
 		}
-        if ( controls.getObject().position.y < 50 && controls.getObject().position.x > 15 && controls.getObject().position.x < 45 && controls.getObject().position.z > -170 && controls.getObject().position.z < -140) {
+        //3rd box
+
+        if ( inputCollision(controls, -60,45,-240,30)==true || inputCollision(controls, -30,45,-210,30)==true || inputCollision(controls, -60,45,-210,30)==true) {
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
+            velocity.y = -velocity.y;
+		}
+
+        if ( inputCollision(controls, 50,55,-310,30)==true || inputCollision(controls, 20,45,-280,30)==true || inputCollision(controls, 50,45,-280,30)==true) {
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+            velocity.y = -velocity.y;
 		}
         //kubus9
         if ( controls.getObject().position.y < 60 && controls.getObject().position.x < -15 && controls.getObject().position.x > -45 && controls.getObject().position.z > -355 && controls.getObject().position.z < -325) {
