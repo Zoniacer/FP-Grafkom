@@ -291,7 +291,7 @@ function createPlatforms(){
     const loader = new THREE.TextureLoader(loadManager);
     let geometry = new THREE.BoxGeometry(30,30,30);
     // let texture = new THREE.MeshLambertMaterial({color:'rgb(0,0,250)'});10.6
-    let texture = new THREE.MeshLambertMaterial({map: loader.load('texture/wood1.jpg')});
+    let texture = new THREE.MeshLambertMaterial({map: loader.load('texture/wood1.jpg'), side: THREE.DoubleSide});
 
     let kubus = new THREE.Mesh(geometry, texture);createKubus(kubus,-30,15,-130);//1st cube
     let kubus2 = kubus.clone();createKubus(kubus2,30, 35, -155);
@@ -346,10 +346,10 @@ function createPlatforms(){
         if(i==9) createKubus(stairs_arr2[i],205,125, -620);
         else createKubus(stairs_arr2[i],-60+i*30, 125, -620);
     }
-     
+
     //pillar 
     let geometry_pillar = new THREE.CylinderGeometry( 15, 15, 30, 30 );
-    let texture_pillar = new THREE.MeshLambertMaterial({map: loader.load('texture/pillar.jpg')});
+    let texture_pillar = new THREE.MeshLambertMaterial({map: loader.load('texture/pillar.jpg'), side: THREE.DoubleSide});
     let pillar = new THREE.Mesh(geometry_pillar, texture_pillar)
     // let pillar = new THREE.Mesh(geometry, texture_pillar);createKubus(pillar,210, 5, -645);//1st pillar
     //pillar kanan
@@ -366,11 +366,11 @@ function createPlatforms(){
       }
 
     //stage
-    let geo = new THREE.BoxGeometry(310,30,270);
+    let geo = new THREE.BoxGeometry(310,170,270);
     // let texture = new THREE.MeshLambertMaterial({color:ssrgb(0,0,250)'});
-    let wood = new THREE.MeshLambertMaterial({map: loader.load('texture/wood1.jpg')});
+    let wood = new THREE.MeshLambertMaterial({map: loader.load('texture/wood1.jpg'), side: THREE.DoubleSide});
     let cube = new THREE.Mesh(geo, wood);
-    createKubus(cube,80, 155, -770);
+    createKubus(cube,80, 85, -770);
 
     //atapnya pilar
     const roof_geo = new THREE.TorusGeometry( 158, 15, 15,56,3.2 );
@@ -383,7 +383,55 @@ function createPlatforms(){
     let pt_mat = new THREE.MeshLambertMaterial({map: loader.load('texture/wood1.jpg')});
     let pt = new THREE.Mesh(pt_geo, pt_mat);createKubus(pt,-90, 240, -645);
     let pt2= pt.clone();createKubus(pt2,230, 240, -645);
+
+    //Drop
+    let geometry_drop = new THREE.BoxGeometry(30, 200, 30);
+    let texture_drop = new THREE.MeshLambertMaterial({map: loader.load('texture/wood4.jpg'), side: THREE.DoubleSide});
+    let drop = new THREE.Mesh(geometry_drop, texture_drop);
+    drop.position.set(0,130, -921);
+    let drop2 = drop.clone();
+    drop2.position.set(45,130,-921);
+    let drop3 = drop.clone();
+    drop3.position.set(90,130,-921);
+    let drop4 = drop.clone();
+    drop4.position.set(135,130,-921);
+    scene.add(drop);
+    scene.add(drop2);
+    scene.add(drop3);
+    scene.add(drop4);
+
+    //Dinding Drop
+    let geometry_dinding = new THREE.BoxGeometry(15, 260, 30);
+    let texture_dinding = new THREE.MeshLambertMaterial({map: loader.load('texture/wood1.jpg'), side: THREE.DoubleSide});
+    let dinding = new THREE.Mesh(geometry_dinding, texture_dinding);
+    dinding.position.set(22.5,130,-921);
+    let dinding2 = dinding.clone();
+    dinding2.position.set(67.5,130,-921);
+    let dinding3 = dinding.clone();
+    dinding3.position.set(112.5,130,-921);
+    scene.add(dinding);
+    scene.add(dinding2);
+    scene.add(dinding3);
+    let dinding4 = kubus.clone();
+    createKubus(dinding4,0,245,-921);
+    let dinding5 = kubus.clone();
+    createKubus(dinding5,45,245,-921);
+    let dinding6 = kubus.clone();
+    createKubus(dinding6,90,245,-921);
+    let dinding7 = kubus.clone();
+    createKubus(dinding7,135,245,-921);
+    let geometry_tembok = new THREE.BoxGeometry(60, 260, 30);
+    let texture_tembok = new THREE.MeshLambertMaterial({map: loader.load('texture/wood1.jpg'), side: THREE.DoubleSide});
+    let tembok = new THREE.Mesh(geometry_tembok, texture_tembok);
+    tembok.position.set(-45, 130, -921);
+    scene.add(tembok);
+    let geometry_tembok2 = new THREE.BoxGeometry(90, 260, 30);
+    let texture_tembok2 = new THREE.MeshLambertMaterial({map: loader.load('texture/wood1.jpg'), side: THREE.DoubleSide});
+    let tembok2 = new THREE.Mesh(geometry_tembok2, texture_tembok2);
+    tembok2.position.set(195, 130, -921);
+    scene.add(tembok2);
 }
+
 
 function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -479,7 +527,7 @@ function animate() {
             velocity.z = -velocity.z * 3;
             velocity.y = -velocity.y;
 		}
-        //kubus9
+        //2 kubus
         if ( controls.getObject().position.y < 60 && controls.getObject().position.x < -15 && controls.getObject().position.x > -45 && controls.getObject().position.z > -355 && controls.getObject().position.z < -325) {
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
@@ -495,11 +543,36 @@ function animate() {
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
 		}
-        if ( controls.getObject().position.y > 140 && controls.getObject().position.y < 170 && controls.getObject().position.x < 195 && controls.getObject().position.x > -75 && controls.getObject().position.z < -635 && controls.getObject().position.z > -905) {
+        if ( controls.getObject().position.y > 0 && controls.getObject().position.y < 170 && controls.getObject().position.x < 195 && controls.getObject().position.x > -75 && controls.getObject().position.z < -635 && controls.getObject().position.z > -905) {
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
 		}
-        
+
+        //Dinding Drop
+        if(inputCollisionSpesifik(controls, -45, 130, -920, 60, 30, 260)){
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+        }
+        if(inputCollisionSpesifik(controls, 195, 130, -920, 90, 30, 260)){
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+        }
+        if(inputCollisionSpesifik(controls, 22.5, 130, -920, 15, 30, 260)){
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+        }
+        if(inputCollisionSpesifik(controls, 67.5, 130, -920, 15, 30, 260)){
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+        }
+        if(inputCollisionSpesifik(controls, 112.5, 130, -920, 15, 30, 260)){
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+        }
+        if(controls.getObject().position.x > 240 || controls.getObject().position.x < -100){
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+        }
         //score
         if (level1clear==0 && controls.getObject().position.y < 200 && controls.getObject().position.y > 155 && controls.getObject().position.x < 195 && controls.getObject().position.x > -75 && controls.getObject().position.z > -905 && controls.getObject().position.z < -770) {
             currentScore += Score;
