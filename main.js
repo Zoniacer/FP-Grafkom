@@ -350,13 +350,13 @@ function createPlatforms(){
     let stairs_arr3=[11];
     for (let i = 0; i < 10; i++) {
         stairs_arr3[i]=kubus.clone();
-        if(i==9) createKubus(stairs_arr3[i],205, 95, -1780);
+        if(i==9) createKubus(stairs_arr3[i],325, 95, -1780);
         else createKubus(stairs_arr3[i],60+i*30, 95, -1780);
     }
     let stairs_arr4=[11];
     for (let i = 0; i < 10; i++) {
         stairs_arr4[i]=kubus.clone();
-        if(i==9) createKubus(stairs_arr4[i],205,125, -1810);
+        if(i==9) createKubus(stairs_arr4[i],325,125, -1810);
         else createKubus(stairs_arr4[i],60+i*30, 125, -1810);
     }
     
@@ -488,12 +488,12 @@ function createPlatforms(){
     let stage2 = new THREE.BoxGeometry(180,100,20);
     let stage2_txt = new THREE.MeshLambertMaterial({map: loader.load('texture/wood1.jpg'), side: THREE.DoubleSide});
     let stages2 = new THREE.Mesh(stage2, stage2_txt);
-    stages2.position.set(180,15,-1525);
+    stages2.position.set(200,15,-1525);
     scene.add(stages2);
     let stage3 = new THREE.BoxGeometry(180,20,150);
     let stage3_txt = new THREE.MeshLambertMaterial({map: loader.load('texture/wood1.jpg'), side: THREE.DoubleSide});
     let stages3 = new THREE.Mesh(stage3, stage3_txt);
-    stages3.position.set(180,55,-1610);
+    stages3.position.set(200,55,-1610);
     scene.add(stages3);
 
 }
