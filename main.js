@@ -430,6 +430,46 @@ function createPlatforms(){
     let tembok2 = new THREE.Mesh(geometry_tembok2, texture_tembok2);
     tembok2.position.set(195, 130, -921);
     scene.add(tembok2);
+
+    //stage 2
+    let st2_1= kubus.clone();createKubus(st2_1,80,15,-1050); 
+    let st2_2= kubus.clone();createKubus(st2_2,135,15,-1080);//obstacle kanan
+    let st2_4= kubus.clone();createKubus(st2_4,135,35,-1080);
+    let st2_3= kubus.clone();createKubus(st2_3,25,15,-1110);//obst kiri
+    let st2_5= kubus.clone();createKubus(st2_5,25,45,-1110);
+    let st2_6= kubus.clone();createKubus(st2_6,135,15,-1155);//obstacle kanan
+    let st2_7= kubus.clone();createKubus(st2_7,135,45,-1155);
+    let st2_8= kubus.clone();createKubus(st2_8,230,15,-1175);//obstacle kanan sebelum glass
+    let st2_9= kubus.clone();createKubus(st2_9,230,45,-1175);
+    //path kaca 1
+    let glass = new THREE.BoxGeometry(20, 20, 120);
+    let glass_txt = new THREE.MeshLambertMaterial({map: loader.load('texture/glass.jpg'), side: THREE.DoubleSide});
+    let path = new THREE.Mesh(glass, glass_txt);
+    path.position.set(230,45,-1245);
+    scene.add(path);
+    let path3 = path.clone();
+    path3.position.set(130,45,-1385);
+    scene.add(path3);
+    //path kaca 2
+    let glass2 = new THREE.BoxGeometry(120, 20, 20);
+    let glass2_txt = new THREE.MeshLambertMaterial({map: loader.load('texture/glass.jpg'), side: THREE.DoubleSide});
+    let path2 = new THREE.Mesh(glass2, glass2_txt);
+    path2.position.set(180,45,-1315);
+    scene.add(path2);
+
+    let st2_10= kubus.clone();createKubus(st2_10,200,15,-1455); 
+    //stage kecil
+    let stage2 = new THREE.BoxGeometry(180,100,20);
+    let stage2_txt = new THREE.MeshLambertMaterial({map: loader.load('texture/wood1.jpg'), side: THREE.DoubleSide});
+    let stages2 = new THREE.Mesh(stage2, stage2_txt);
+    stages2.position.set(180,15,-1525);
+    scene.add(stages2);
+    let stage3 = new THREE.BoxGeometry(180,20,150);
+    let stage3_txt = new THREE.MeshLambertMaterial({map: loader.load('texture/wood1.jpg'), side: THREE.DoubleSide});
+    let stages3 = new THREE.Mesh(stage3, stage3_txt);
+    stages3.position.set(180,50,-1610);
+    scene.add(stages3);
+
 }
 
 
