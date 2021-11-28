@@ -332,6 +332,7 @@ function createPlatforms(){
         if(i<3) createKubus(bef_stage[i],-i*30, 95, -500);
         else createKubus(bef_stage[i],-(i-3)*30, 95, -530);
     }
+    
     //tangga stage 1
     let stairs_arr=[11];
     for (let i = 0; i < 10; i++) {
@@ -339,14 +340,26 @@ function createPlatforms(){
         if(i==9) createKubus(stairs_arr[i],205, 95, -590);
         else createKubus(stairs_arr[i],-60+i*30, 95, -590);
     }
-    //tangga stage 2
     let stairs_arr2=[11];
     for (let i = 0; i < 10; i++) {
         stairs_arr2[i]=kubus.clone();
         if(i==9) createKubus(stairs_arr2[i],205,125, -620);
         else createKubus(stairs_arr2[i],-60+i*30, 125, -620);
     }
-
+    //tangga stage 2
+    let stairs_arr3=[11];
+    for (let i = 0; i < 10; i++) {
+        stairs_arr3[i]=kubus.clone();
+        if(i==9) createKubus(stairs_arr3[i],205, 95, -1780);
+        else createKubus(stairs_arr3[i],60+i*30, 95, -1780);
+    }
+    let stairs_arr4=[11];
+    for (let i = 0; i < 10; i++) {
+        stairs_arr4[i]=kubus.clone();
+        if(i==9) createKubus(stairs_arr4[i],205,125, -1810);
+        else createKubus(stairs_arr4[i],60+i*30, 125, -1810);
+    }
+    
     //pillar 
     let geometry_pillar = new THREE.CylinderGeometry( 15, 15, 30, 30 );
     let texture_pillar = new THREE.MeshLambertMaterial({map: loader.load('texture/pillar.jpg'), side: THREE.DoubleSide});
@@ -363,14 +376,27 @@ function createPlatforms(){
     for (let i = 0; i < 8; i++) {
         pillarArray[i]=pillar.clone();
         createKubus(pillarArray[i],-90, 5+i*30, -645);
+    }
+    //pillar stage 2
+    let pillarArr3=[10];
+    for (let i = 0; i < 8; i++) {
+        pillarArr3[i]=pillar.clone();
+        createKubus(pillarArr3[i],350, 5+i*30, -1835);
       }
-
+    let pillarArr4=[10];
+    //pillar kiri
+    for (let i = 0; i < 8; i++) {
+        pillarArr4[i]=pillar.clone();
+        createKubus(pillarArr4[i],30, 5+i*30, -1835);
+    }
     //stage
     let geo = new THREE.BoxGeometry(310,170,270);
     // let texture = new THREE.MeshLambertMaterial({color:ssrgb(0,0,250)'});
     let wood = new THREE.MeshLambertMaterial({map: loader.load('texture/wood1.jpg'), side: THREE.DoubleSide});
     let cube = new THREE.Mesh(geo, wood);
     createKubus(cube,80, 85, -770);
+    //stage2
+    let cube2 = cube.clone();createKubus(cube2,200, 85, -1960);
 
     //atapnya pilar
     const roof_geo = new THREE.TorusGeometry( 158, 15, 15,56,3.2 );
@@ -467,7 +493,7 @@ function createPlatforms(){
     let stage3 = new THREE.BoxGeometry(180,20,150);
     let stage3_txt = new THREE.MeshLambertMaterial({map: loader.load('texture/wood1.jpg'), side: THREE.DoubleSide});
     let stages3 = new THREE.Mesh(stage3, stage3_txt);
-    stages3.position.set(180,50,-1610);
+    stages3.position.set(180,55,-1610);
     scene.add(stages3);
 
 }
