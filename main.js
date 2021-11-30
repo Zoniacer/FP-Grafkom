@@ -404,11 +404,17 @@ function createPlatforms(){
     const torus = new THREE.Mesh( roof_geo , roof_mat );
     torus.position.set(70, 245, -645);
     scene.add( torus );
-   
+    
     let pt_geo = new THREE.BoxGeometry(40,10,30);
     let pt_mat = new THREE.MeshLambertMaterial({map: loader.load('texture/wood1.jpg')});
     let pt = new THREE.Mesh(pt_geo, pt_mat);createKubus(pt,-90, 240, -645);
     let pt2= pt.clone();createKubus(pt2,230, 240, -645);
+    //stage 2
+    let torus2 = torus.clone();
+    torus2.position.set(190, 245, -1835);
+    scene.add( torus2 );
+    let pt3= pt.clone();createKubus(pt3,30, 240, -1835);
+    let pt4= pt.clone();createKubus(pt4,350, 240, -1835);
 
     //Drop
     let geometry_drop = new THREE.BoxGeometry(30, 200, 30);
@@ -639,6 +645,39 @@ function animate() {
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
         }
+    //     let st2_2= kubus.clone();createKubus(st2_2,135,15,-1080);//obstacle kanan
+    // let st2_4= kubus.clone();createKubus(st2_4,135,35,-1080);
+    // let st2_3= kubus.clone();createKubus(st2_3,25,15,-1110);//obst kiri
+    // let st2_5= kubus.clone();createKubus(st2_5,25,45,-1110);
+    // let st2_6= kubus.clone();createKubus(st2_6,135,15,-1155);//obstacle kanan
+    // let st2_7= kubus.clone();createKubus(st2_7,135,45,-1155);
+    // let st2_8= kubus.clone();createKubus(st2_8,230,15,-1175);//obstacle kanan sebelum glass
+    // let st2_9= kubus.clone();createKubus(st2_9,230,45,-1175);
+        //sketsa 2
+        //1st box
+        if ( inputCollision(controls, 80,15,-1050,30)==true ) {
+            velocity.y = -velocity.y;
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+        //2st box kanan
+        if ( inputCollision(controls, 135,15,-1080,30)==true || inputCollision(controls, 135,35,-1080,30)==true ) {
+            velocity.y = -velocity.y;
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+		}
+        //3st box kiri
+        if ( inputCollision(controls, 25,15,-1110,30)==true || inputCollision(controls, 25,45,-1110,30)==true ) {
+            velocity.y = -velocity.y;
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+		}
+        //box sesudah kaca
+        if ( inputCollision(controls, 200,15,-1455,30)==true) {
+            velocity.y = -velocity.y;
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+        }
+    }
         //score
         if (level1clear==0 && controls.getObject().position.y < 200 && controls.getObject().position.y > 155 && controls.getObject().position.x < 195 && controls.getObject().position.x > -75 && controls.getObject().position.z > -905 && controls.getObject().position.z < -770) {
             currentScore += Score;
