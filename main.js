@@ -254,12 +254,12 @@ function createText() {
         }
         lineText.position.set(0, 100, -240)
         scene.add( lineText );
-        let text_stage1=["Nothing", "Happiness", "Searching", "Freedom"];
+        let text_stage1=["A", "D", "U", "J"];
         let shape_stage1=[4];
         let geometry_stage1=[4];
         let mesh_stage1=[4];
 
-        let shapes_podium = font.generateShapes( "What is the meaning of life", 5 );
+        let shapes_podium = font.generateShapes( "Apakah Huruf ke-4 dalam Abjad?", 5 );
         let geometry_podium = new THREE.ShapeGeometry( shapes_podium );
         let podiumText = new THREE.Mesh( geometry_podium, matLite );
         createPositionText(podiumText,20, 200, -750);
@@ -659,7 +659,9 @@ function animate() {
             velocity.y = -velocity.y;
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
+        }
         //2st box kanan
+
         if ( inputCollision(controls, 135,15,-1080,30)==true || inputCollision(controls, 135,35,-1080,30)==true ) {
             velocity.y = -velocity.y;
             velocity.x = -velocity.x * 3;
@@ -677,7 +679,7 @@ function animate() {
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
         }
-    }
+    
         //score
         if (level1clear==0 && controls.getObject().position.y < 200 && controls.getObject().position.y > 155 && controls.getObject().position.x < 195 && controls.getObject().position.x > -75 && controls.getObject().position.z > -905 && controls.getObject().position.z < -770) {
             currentScore += Score;
