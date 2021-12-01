@@ -30,7 +30,7 @@ init();
 animate();
 
 var jumping_sound = document.getElementById("myAudio"); 
-
+jumping_sound.volume = 0.1;
 
 function init() {
     camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1000 );
