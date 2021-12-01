@@ -1,6 +1,7 @@
 import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/build/three.module.js';
 import {PointerLockControls} from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/controls/PointerLockControls.js';
 import { FontLoader } from './jsm/loaders/FontLoader.js';
+import {GLTFLoader} from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/loaders/GLTFLoader.js';
 let camera, scene, renderer, controls;
 
 const objects = [];
@@ -180,7 +181,8 @@ function init() {
     //scene.add( floor2 );
     // objects
     createPlatforms()
-    createText()
+    createText();
+    trees();
     //
     renderer = new THREE.WebGLRenderer( { antialias: true } );
     renderer.setPixelRatio( window.devicePixelRatio );
@@ -190,6 +192,26 @@ function init() {
     window.addEventListener( 'resize', onWindowResize );
 
 }
+//tree banyak
+function trees() {
+    const gltfLoader = new GLTFLoader();
+    gltfLoader.load('/trees_set/scene.gltf', (gltf) => {
+    const treesGLTF = gltf.scene;
+    treesGLTF.scale.set(30,30,30)
+    treesGLTF.position.z=-400;
+    treesGLTF.position.x=40;
+    scene.add(treesGLTF);
+    })}
+//1 tree aja
+    // function trees() {
+    //     const gltfLoader = new GLTFLoader();
+    //     gltfLoader.load('/oak_tree/scene.gltf', (gltf) => {
+    //     const treesGLTF = gltf.scene;
+    //     treesGLTF.scale.set(15,15,15)
+    //     treesGLTF.position.z=-400;
+    //     treesGLTF.position.x=-300;
+    //     scene.add(treesGLTF);
+    //     })}
 function createText() {
     const loader = new FontLoader();
     loader.load( 'fonts/helvetiker_regular.typeface.json', function ( font ) {
@@ -252,7 +274,7 @@ function createText() {
             lineText.add( lineMesh );
 
         }
-        lineText.position.set(0, 100, -240)
+        lineText.position.set(0,80, -180)
         scene.add( lineText );
         let text_stage1=["A", "D", "U", "J"];
         let shape_stage1=[4];
@@ -645,14 +667,6 @@ function animate() {
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
         }
-    //     let st2_2= kubus.clone();createKubus(st2_2,135,15,-1080);//obstacle kanan
-    // let st2_4= kubus.clone();createKubus(st2_4,135,35,-1080);
-    // let st2_3= kubus.clone();createKubus(st2_3,25,15,-1110);//obst kiri
-    // let st2_5= kubus.clone();createKubus(st2_5,25,45,-1110);
-    // let st2_6= kubus.clone();createKubus(st2_6,135,15,-1155);//obstacle kanan
-    // let st2_7= kubus.clone();createKubus(st2_7,135,45,-1155);
-    // let st2_8= kubus.clone();createKubus(st2_8,230,15,-1175);//obstacle kanan sebelum glass
-    // let st2_9= kubus.clone();createKubus(st2_9,230,45,-1175);
         //sketsa 2
         //1st box
         if ( inputCollision(controls, 80,15,-1050,30)==true ) {
@@ -660,15 +674,27 @@ function animate() {
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
         }
-        //2st box kanan
+        //2nd box kanan
 
         if ( inputCollision(controls, 135,15,-1080,30)==true || inputCollision(controls, 135,35,-1080,30)==true ) {
             velocity.y = -velocity.y;
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
 		}
-        //3st box kiri
+        //3rd box kiri
         if ( inputCollision(controls, 25,15,-1110,30)==true || inputCollision(controls, 25,45,-1110,30)==true ) {
+            velocity.y = -velocity.y;
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+		}
+        //4box kanan
+        if ( inputCollision(controls, 135,15,-1155,30)==true || inputCollision(controls, 230,45,-1175,30)==true ) {
+            velocity.y = -velocity.y;
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+		}
+        //box sebelum kaca
+        if ( inputCollision(controls, 230,15,-1175,30)==true || inputCollision(controls, 135,45,-1155,30)==true ) {
             velocity.y = -velocity.y;
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
@@ -679,7 +705,16 @@ function animate() {
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
         }
-    
+        //stage kecil
+        if(inputCollisionSpesifik(controls, 200,15,-1525, 180, 100, 20)){
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+        }
+        if(inputCollisionSpesifik(controls, 200,55,-1610, 180, 20, 150)){
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+        }
+              
         //score
         if (level1clear==0 && controls.getObject().position.y < 200 && controls.getObject().position.y > 155 && controls.getObject().position.x < 195 && controls.getObject().position.x > -75 && controls.getObject().position.z > -905 && controls.getObject().position.z < -770) {
             currentScore += Score;
