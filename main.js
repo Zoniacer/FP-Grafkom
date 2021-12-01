@@ -29,6 +29,7 @@ let level1clear = 0;
 init();
 animate();
 
+var jumping_sound = document.getElementById("myAudio"); 
 
 
 function init() {
@@ -91,6 +92,9 @@ function init() {
 				break;
 
             case 'Space':
+                jumping_sound.pause();
+                jumping_sound.currentTime = 0;
+                jumping_sound.play();
 				if ( canJump === true ) velocity.y += 350;
 				canJump = false;
 				break;
@@ -137,7 +141,7 @@ function init() {
     raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 );
 
     // floor
-    let floorGeometry = new THREE.PlaneGeometry( 5000, 5000 );
+    let floorGeometry = new THREE.PlaneGeometry( 2000, 5000 );
     floorGeometry.rotateX( - Math.PI / 2 );
 
     // vertex displacement
@@ -198,7 +202,7 @@ function trees() {
     gltfLoader.load('/trees_set/scene.gltf', (gltf) => {
     const treesGLTF = gltf.scene;
     treesGLTF.scale.set(30,30,30)
-    treesGLTF.position.z=-400;
+    treesGLTF.position.z=-390;
     treesGLTF.position.x=40;
     scene.add(treesGLTF);
     })}
