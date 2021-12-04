@@ -718,9 +718,9 @@ function animate() {
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
         }
-              
+        //45,130,-921
         //score
-        if (level1clear==0 && controls.getObject().position.y < 200 && controls.getObject().position.y > 155 && controls.getObject().position.x < 195 && controls.getObject().position.x > -75 && controls.getObject().position.z > -905 && controls.getObject().position.z < -770) {
+        if (level1clear==0 && inputCollision(controls, 45,130,-921,30)==true) {
             currentScore += Score;
             console.log(currentScore);
             elementScore.innerHTML = currentScore;
