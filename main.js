@@ -34,8 +34,8 @@ var jumping_sound = document.getElementById("myAudio");
 jumping_sound.volume = 0.1;
 
 function init() {
-    camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1000 );
-    camera.position.y = 40;
+    camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 500 );
+    camera.position.y = 20;
 
     scene = new THREE.Scene();
     const loaderBackground = new THREE.TextureLoader();
@@ -455,34 +455,52 @@ function createPlatforms(){
     }
     
     //pillar 
-    let geometry_pillar = new THREE.CylinderGeometry( 15, 15, 30, 30 );
+    let geometry_pillar = new THREE.CylinderGeometry( 15, 15, 240, 30 );
     let texture_pillar = new THREE.MeshLambertMaterial({map: loader.load('texture/pillar.jpg'), side: THREE.DoubleSide});
     let pillar = new THREE.Mesh(geometry_pillar, texture_pillar)
     // let pillar = new THREE.Mesh(geometry, texture_pillar);createKubus(pillar,210, 5, -645);//1st pillar
     //pillar kanan
-    let pillarArray2=[10];
-    for (let i = 0; i < 8; i++) {
-        pillarArray2[i]=pillar.clone();
-        createKubus(pillarArray2[i],230, 5+i*30, -645);
-      }
-    let pillarArray=[10];
+    let pillarr = pillar.clone();
+    pillarr.position.set(230, 120, -645);
+    scene.add(pillarr);
+    // let pillarArray2=[10];
+    // for (let i = 0; i < 8; i++) {
+    //     pillarArray2[i]=pillar.clone();
+    //     createKubus(pillarArray2[i],230, 5+i*30, -645);
+    //   }
+    // let pillarArray=[10];
     //pillar kiri
-    for (let i = 0; i < 8; i++) {
-        pillarArray[i]=pillar.clone();
-        createKubus(pillarArray[i],-90, 5+i*30, -645);
-    }
+    let pillarl = pillar.clone();
+    pillarl.position.set(-90, 120, -645);
+    scene.add(pillarl);
+    // for (let i = 0; i < 8; i++) {
+    //     pillarArray[i]=pillar.clone();
+    //     createKubus(pillarArray[i],-90, 5+i*30, -645);
+    // }
     //pillar stage 2
-    let pillarArr3=[10];
-    for (let i = 0; i < 8; i++) {
-        pillarArr3[i]=pillar.clone();
-        createKubus(pillarArr3[i],350, 5+i*30, -1835);
-      }
-    let pillarArr4=[10];
+    let pillarr2 = pillar.clone();
+    pillarr2.position.set(350, 120, -1835);
+    scene.add(pillarr2);
+    // let pillarr2 = pillar.clone();
+    // pillarr2.position.set(350, 150, -1835);
+    // scene.add(pillarr2);
+    // let pillarArr3=[10];
+    // for (let i = 0; i < 8; i++) {
+    //     pillarArr3[i]=pillar.clone();
+    //     createKubus(pillarArr3[i],350, 5+i*30, -1835);
+    //   }
+    // let pillarArr4=[10];
     //pillar kiri
-    for (let i = 0; i < 8; i++) {
-        pillarArr4[i]=pillar.clone();
-        createKubus(pillarArr4[i],30, 5+i*30, -1835);
-    }
+    let pillarl2 = pillar.clone();
+    pillarl2.position.set(30, 120, -1835);
+    scene.add(pillarl2);
+    // let pillarl2 = pillar.clone();
+    // pillarl2.position.set(30,150,-1835);
+    // scene.add(pillarl2);
+    // for (let i = 0; i < 8; i++) {
+    //     pillarArr4[i]=pillar.clone();
+    //     createKubus(pillarArr4[i],30, 5+i*30, -1835);
+    // }
     //stage
     let geo = new THREE.BoxGeometry(310,170,270);
     // let texture = new THREE.MeshLambertMaterial({color:ssrgb(0,0,250)'});
@@ -559,8 +577,8 @@ function createPlatforms(){
 
     //stage 2
     let st2_1= kubus.clone();createKubus(st2_1,80,15,-1050); 
-    let st2_2= kubus.clone();createKubus(st2_2,135,15,-1080);//obstacle kanan
-    let st2_4= kubus.clone();createKubus(st2_4,135,35,-1080);
+    let st2_2= kubus.clone();createKubus(st2_2,135,35,-1080);//obstacle kanan
+    //let st2_4= kubus.clone();createKubus(st2_4,135,45,-1080);
     let st2_3= kubus.clone();createKubus(st2_3,25,15,-1110);//obst kiri
     let st2_5= kubus.clone();createKubus(st2_5,25,45,-1110);
     let st2_6= kubus.clone();createKubus(st2_6,135,15,-1155);//obstacle kanan
@@ -748,32 +766,28 @@ function animate() {
         }
         //2nd box kanan
 
-        if ( inputCollision(controls, 135,15,-1080,30)==true || inputCollision(controls, 135,35,-1080,30)==true ) {
+        if (inputCollision(controls, 135,35,-1080,30)==true ) {
             velocity.y = -velocity.y;
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
 		}
         //3rd box kiri
         if ( inputCollision(controls, 25,15,-1110,30)==true || inputCollision(controls, 25,45,-1110,30)==true ) {
-            velocity.y = -velocity.y;
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
 		}
         //4box kanan
         if ( inputCollision(controls, 135,15,-1155,30)==true || inputCollision(controls, 230,45,-1175,30)==true ) {
-            velocity.y = -velocity.y;
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
 		}
         //box sebelum kaca
         if ( inputCollision(controls, 230,15,-1175,30)==true || inputCollision(controls, 135,45,-1155,30)==true ) {
-            velocity.y = -velocity.y;
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
 		}
         //box sesudah kaca
         if ( inputCollision(controls, 200,15,-1455,30)==true) {
-            velocity.y = -velocity.y;
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
         }
