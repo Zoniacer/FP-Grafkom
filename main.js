@@ -25,7 +25,8 @@ let Score = 10;
 let currentScore = 0;
 let elementScore = document.getElementById("score");
 let level1clear = 0;
-
+let level2clear = 0;
+let level3clear = 0;
 init();
 animate();
 
@@ -141,7 +142,7 @@ function init() {
     raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 );
 
     // floor
-    let floorGeometry = new THREE.PlaneGeometry( 2000, 5000 );
+    let floorGeometry = new THREE.PlaneGeometry( 900, 4000 );
     floorGeometry.rotateX( - Math.PI / 2 );
 
     // vertex displacement
@@ -187,6 +188,8 @@ function init() {
     createPlatforms()
     createText();
     trees();
+    trees2();
+    trees3();
     //
     renderer = new THREE.WebGLRenderer( { antialias: true } );
     renderer.setPixelRatio( window.devicePixelRatio );
@@ -206,6 +209,29 @@ function trees() {
     treesGLTF.position.x=40;
     scene.add(treesGLTF);
     })}
+
+function trees2() {
+    const gltfLoader = new GLTFLoader();
+    gltfLoader.load('/stage2tree/scene.gltf', (gltf) => {
+    const treesGLTF2 = gltf.scene;
+    treesGLTF2.scale.set(4,4,4)
+    treesGLTF2.position.z=-1247;
+    treesGLTF2.position.x=-120;
+    treesGLTF2.rotation.y=1.5;
+    scene.add(treesGLTF2);
+    })}
+
+function trees3() {
+    const gltfLoader = new GLTFLoader();
+    gltfLoader.load('/stage2tree/scene.gltf', (gltf) => {
+    const treesGLTF2 = gltf.scene;
+    treesGLTF2.scale.set(4,4,4)
+    treesGLTF2.position.z=-1240;
+    treesGLTF2.position.x=370;
+    treesGLTF2.rotation.y=1.5;
+    scene.add(treesGLTF2);
+    })}
+
 //1 tree aja
     // function trees() {
     //     const gltfLoader = new GLTFLoader();
@@ -229,6 +255,12 @@ function createText() {
 
         const matLite = new THREE.MeshBasicMaterial( {
             color: 0x000000,
+ 
+            side: THREE.DoubleSide
+        } );
+
+        const matLite2 = new THREE.MeshBasicMaterial( {
+            color: 0x4ac300,
  
             side: THREE.DoubleSide
         } );
@@ -280,6 +312,7 @@ function createText() {
         }
         lineText.position.set(0,80, -180)
         scene.add( lineText );
+        //stage1
         let text_stage1=["A", "D", "U", "J"];
         let shape_stage1=[4];
         let geometry_stage1=[4];
@@ -287,16 +320,51 @@ function createText() {
 
         let shapes_podium = font.generateShapes( "Apakah Huruf ke-4 dalam Abjad?", 5 );
         let geometry_podium = new THREE.ShapeGeometry( shapes_podium );
-        let podiumText = new THREE.Mesh( geometry_podium, matLite );
+        let podiumText = new THREE.Mesh( geometry_podium, matLite2 );
         createPositionText(podiumText,20, 200, -750);
         
         for (let i = 0; i < 4; i++) {
-            shape_stage1[i]=font.generateShapes( text_stage1[i], 2 );
+            shape_stage1[i]=font.generateShapes( text_stage1[i], 5 );
             geometry_stage1[i]=new THREE.ShapeGeometry( shape_stage1[i] );
-            mesh_stage1[i] = new THREE.Mesh( geometry_stage1[i], matLite );
-            createPositionText(mesh_stage1[i],0+40*i, 210, -875);
+            mesh_stage1[i] = new THREE.Mesh( geometry_stage1[i], matLite2 );
+            createPositionText(mesh_stage1[i],0+45*i, 235, -900);
         }
+        //stage2
+        /*
+        let text_stage2=["Matahari", "Bulan", "Langit", "Laba"];
+        let shape_stage2=[4];
+        let geometry_stage2=[4];
+        let mesh_stage2=[4];
+
+        let shapes_podium2 = font.generateShapes( "Jika diucapkan sekali jauh, diucapkan dua kali dekat. Apakah itu?", 5 );
+        let geometry_podium2 = new THREE.ShapeGeometry( shapes_podium2 );
+        let podiumText2 = new THREE.Mesh( geometry_podium2, matLite2 );
+        createPositionText(podiumText2,20, 200, -750);
         
+        for (let i = 0; i < 4; i++) {
+            shape_stage2[i]=font.generateShapes( text_stage2[i], 5 );
+            geometry_stage2[i]=new THREE.ShapeGeometry( shape_stage2[i] );
+            mesh_stage2[i] = new THREE.Mesh( geometry_stage2[i], matLite2 );
+            createPositionText(mesh_stage2[i],0+45*i, 235, -900);
+        }
+        //stage3
+        let text_stage3=["Tuyul", "Paku", "Anak Main Gobag Sodor", "Kelapa"];
+        let shape_stage3=[4];
+        let geometry_stage3=[4];
+        let mesh_stage3=[4];
+
+        let shapes_podium3 = font.generateShapes( "Aku Sembunyi tapi kepalaku masih terlihat, Apakah aku?", 5 );
+        let geometry_podium3 = new THREE.ShapeGeometry( shapes_podium3 );
+        let podiumText3 = new THREE.Mesh( geometry_podium3, matLite2 );
+        createPositionText(podiumText3,20, 200, -750);
+        
+        for (let i = 0; i < 4; i++) {
+            shape_stage3[i]=font.generateShapes( text_stage3[i], 5 );
+            geometry_stage3[i]=new THREE.ShapeGeometry( shape_stage3[i] );
+            mesh_stage3[i] = new THREE.Mesh( geometry_stage3[i], matLite2 );
+            createPositionText(mesh_stage3[i],0+45*i, 235, -900);
+        }
+        */
     } );
 
 }
@@ -718,7 +786,7 @@ function animate() {
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
         }
-        //45,130,-921
+
         //score
         if (level1clear==0 && inputCollision(controls, 45,130,-921,30)==true) {
             currentScore += Score;
@@ -726,6 +794,20 @@ function animate() {
             elementScore.innerHTML = currentScore;
             level1clear=2;
 		}
+        /*
+        if (level2clear==0 && inputCollision(controls, 45,130,-921,30)==true) {
+            currentScore += Score;
+            console.log(currentScore);
+            elementScore.innerHTML = currentScore;
+            level2clear=2;
+		}
+        if (level3clear==0 && inputCollision(controls, 45,130,-921,30)==true) {
+            currentScore += Score;
+            console.log(currentScore);
+            elementScore.innerHTML = currentScore;
+            level3clear=2;
+		}
+        */
     }
 
     prevTime = time;
