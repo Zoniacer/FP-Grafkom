@@ -188,8 +188,8 @@ function init() {
     createPlatforms()
     createText();
     trees();
-    trees2();
-    trees3();
+    // trees2();
+    // trees3();
     //
     renderer = new THREE.WebGLRenderer( { antialias: true } );
     renderer.setPixelRatio( window.devicePixelRatio );
@@ -210,27 +210,27 @@ function trees() {
     scene.add(treesGLTF);
     })}
 
-function trees2() {
-    const gltfLoader = new GLTFLoader();
-    gltfLoader.load('/stage2tree/scene.gltf', (gltf) => {
-    const treesGLTF2 = gltf.scene;
-    treesGLTF2.scale.set(4,4,4)
-    treesGLTF2.position.z=-1247;
-    treesGLTF2.position.x=-120;
-    treesGLTF2.rotation.y=1.5;
-    scene.add(treesGLTF2);
-    })}
+// function trees2() {
+//     const gltfLoader = new GLTFLoader();
+//     gltfLoader.load('/stage2tree/scene.gltf', (gltf) => {
+//     const treesGLTF2 = gltf.scene;
+//     treesGLTF2.scale.set(4,4,4)
+//     treesGLTF2.position.z=-1247;
+//     treesGLTF2.position.x=-120;
+//     treesGLTF2.rotation.y=1.5;
+//     scene.add(treesGLTF2);
+//     })}
 
-function trees3() {
-    const gltfLoader = new GLTFLoader();
-    gltfLoader.load('/stage2tree/scene.gltf', (gltf) => {
-    const treesGLTF2 = gltf.scene;
-    treesGLTF2.scale.set(4,4,4)
-    treesGLTF2.position.z=-1240;
-    treesGLTF2.position.x=370;
-    treesGLTF2.rotation.y=1.5;
-    scene.add(treesGLTF2);
-    })}
+// function trees3() {
+//     const gltfLoader = new GLTFLoader();
+//     gltfLoader.load('/stage2tree/scene.gltf', (gltf) => {
+//     const treesGLTF2 = gltf.scene;
+//     treesGLTF2.scale.set(4,4,4)
+//     treesGLTF2.position.z=-1240;
+//     treesGLTF2.position.x=370;
+//     treesGLTF2.rotation.y=1.5;
+//     scene.add(treesGLTF2);
+//     })}
 
 //1 tree aja
     // function trees() {
@@ -265,53 +265,7 @@ function createText() {
             side: THREE.DoubleSide
         } );
 
-        const message = "Level 1";
-
-        const shapes = font.generateShapes( message, 70 );
-        const geometry = new THREE.ShapeGeometry( shapes );
-        geometry.computeBoundingBox();
-        const xMid = - 0.5 * ( geometry.boundingBox.max.x - geometry.boundingBox.min.x );
-
-        geometry.translate( xMid, 0, 0 );
-
-        const holeShapes = [];
-
-        for ( let i = 0; i < shapes.length; i ++ ) {
-
-            const shape = shapes[ i ];
-
-            if ( shape.holes && shape.holes.length > 0 ) {
-
-                for ( let j = 0; j < shape.holes.length; j ++ ) {
-
-                    const hole = shape.holes[ j ];
-                    holeShapes.push( hole );
-
-                }
-
-            }
-
-        }
-
-        shapes.push.apply( shapes, holeShapes );
-
-        const lineText = new THREE.Object3D();
-
-        for ( let i = 0; i < shapes.length; i ++ ) {
-
-            const shape = shapes[ i ];
-
-            const points = shape.getPoints();
-            const geometry = new THREE.BufferGeometry().setFromPoints( points );
-
-            geometry.translate( xMid, 0, 0 );
-
-            const lineMesh = new THREE.Line( geometry, matDark );
-            lineText.add( lineMesh );
-
-        }
-        lineText.position.set(0,80, -180)
-        scene.add( lineText );
+        
         //stage1
         let text_stage1=["A", "D", "U", "J"];
         let shape_stage1=[4];
