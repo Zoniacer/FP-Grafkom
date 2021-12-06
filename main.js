@@ -127,6 +127,9 @@ function init() {
             case 'ShiftLeft':
                 run = 1;
                 break;
+            case 'KeyR':
+                camera.position.set(0,20,-921);
+                break;
 		}
     };
     const onMouseWheel = function ( event ) {
@@ -531,31 +534,34 @@ function createPlatforms(){
 
     //stage 2
     let st2_1= kubus.clone();createKubus(st2_1,80,15,-1050); 
-    let st2_2= kubus.clone();createKubus(st2_2,135,35,-1080);//obstacle kanan
+    let st2_2= kubus.clone();createKubus(st2_2,140,35,-1080);//obstacle kanan
     //let st2_4= kubus.clone();createKubus(st2_4,135,45,-1080);
     let st2_3= kubus.clone();createKubus(st2_3,25,15,-1110);//obst kiri
     let st2_5= kubus.clone();createKubus(st2_5,25,45,-1110);
-    let st2_6= kubus.clone();createKubus(st2_6,135,15,-1155);//obstacle kanan
-    let st2_7= kubus.clone();createKubus(st2_7,135,45,-1155);
+    let st2_6= kubus.clone();createKubus(st2_6,160,15,-1155);//obstacle kanan
+    let st2_7= kubus.clone();createKubus(st2_7,160,45,-1155);
     let st2_8= kubus.clone();createKubus(st2_8,230,15,-1175);//obstacle kanan sebelum glass
     let st2_9= kubus.clone();createKubus(st2_9,230,45,-1175);
     //path kaca 1
     let glass = new THREE.BoxGeometry(20, 20, 120);
     let glass_txt = new THREE.MeshLambertMaterial({map: loader.load('texture/glass.jpg'), side: THREE.DoubleSide});
     let path = new THREE.Mesh(glass, glass_txt);
-    path.position.set(230,45,-1245);
+    path.position.set(230,60,-1245);
     scene.add(path);
+    objects.push(path);
     let path3 = path.clone();
-    path3.position.set(130,45,-1385);
+    path3.position.set(130,60,-1385);
     scene.add(path3);
+    objects.push(path3);
     //path kaca 2
     let glass2 = new THREE.BoxGeometry(120, 20, 20);
     let glass2_txt = new THREE.MeshLambertMaterial({map: loader.load('texture/glass.jpg'), side: THREE.DoubleSide});
     let path2 = new THREE.Mesh(glass2, glass2_txt);
-    path2.position.set(180,45,-1315);
+    path2.position.set(180,60,-1315);
     scene.add(path2);
+    objects.push(path2);
 
-    let st2_10= kubus.clone();createKubus(st2_10,200,15,-1455); 
+    let st2_10= kubus.clone();createKubus(st2_10,130,60,-1455); 
     //stage kecil
     let stage2 = new THREE.BoxGeometry(180,100,20);
     let stage2_txt = new THREE.MeshLambertMaterial({map: loader.load('texture/wood1.jpg'), side: THREE.DoubleSide});
@@ -740,6 +746,24 @@ function animate() {
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
 		}
+        //box kaca
+        if(inputCollisionSpesifik(controls,230,60,-1245,20,120,20)){
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+            velocity.y = -velocity.y; 
+        }
+
+        if(inputCollisionSpesifik(controls,130,60,-1385,20,120,20)){
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+            velocity.y = -velocity.y; 
+        }
+
+        if(inputCollisionSpesifik(controls,180,60,-1315,120,20,20)){
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+            velocity.y = -velocity.y; 
+        }
         //box sesudah kaca
         if ( inputCollision(controls, 200,15,-1455,30)==true) {
             velocity.x = -velocity.x * 3;
@@ -756,7 +780,7 @@ function animate() {
         }
 
         //score
-        if (level1clear==0 && inputCollision(controls, 45,130,-921,30)==true) {
+        if (level1clear==0 && inputCollision(controls, 45,130,-920,30)==true) {
             currentScore += Score;
             console.log(currentScore);
             elementScore.innerHTML = currentScore;
