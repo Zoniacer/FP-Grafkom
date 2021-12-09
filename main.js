@@ -26,13 +26,58 @@ let currentScore = 0;
 let elementScore = document.getElementById("score");
 let level1clear = 0;
 let level2clear = 0;
-let level3clear = 0;
 init();
 animate();
 
 var jumping_sound = document.getElementById("myAudio"); 
 jumping_sound.volume = 0.1;
 
+function timeToString(time) {
+    let diffInHrs = time / 3600000;
+    let hh = Math.floor(diffInHrs);
+  
+    let diffInMin = (diffInHrs - hh) * 60;
+    let mm = Math.floor(diffInMin);
+  
+    let diffInSec = (diffInMin - mm) * 60;
+    let ss = Math.floor(diffInSec);
+  
+    let diffInMs = (diffInSec - ss) * 100;
+    let ms = Math.floor(diffInMs);
+  
+    let formattedMM = mm.toString().padStart(2, "0");
+    let formattedSS = ss.toString().padStart(2, "0");
+    let formattedMS = ms.toString().padStart(2, "0");
+  
+    return `${formattedMM}:${formattedSS}:${formattedMS}`;
+  }
+  
+  // Declare variables to use in our functions below
+  
+  let startTime;
+  let elapsedTime = 0;
+  let timerInterval;
+  
+  // Create function to modify innerHTML
+  
+  function print(txt) {
+    document.getElementById("display").innerHTML = txt;
+  }
+  
+  // Create "start", "pause" and "reset" functions
+  
+  function start() {
+    startTime = Date.now() - elapsedTime;
+    timerInterval = setInterval(function printTime() {
+      elapsedTime = Date.now() - startTime;
+      print(timeToString(elapsedTime));
+    }, 10);
+  }
+  
+  function pause() {
+    clearInterval(timerInterval);
+  }
+  
 function init() {
     camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 500 );
     camera.position.y = 20;
@@ -57,6 +102,7 @@ function init() {
 
     instructions.addEventListener( 'click', function () {
         controls.lock();
+        start();
     } );
 
     controls.addEventListener( 'lock', function () {
@@ -67,6 +113,7 @@ function init() {
     controls.addEventListener( 'unlock', function () {
         blocker.style.display = 'block';
         instructions.style.display = '';
+        pause();
     } );
 
 	scene.add( controls.getObject() );
@@ -145,7 +192,7 @@ function init() {
     raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 );
 
     // floor
-    let floorGeometry = new THREE.PlaneGeometry( 900, 4000 );
+    let floorGeometry = new THREE.PlaneGeometry( 900, 4200 );
     floorGeometry.rotateX( - Math.PI / 2 );
 
     // vertex displacement
@@ -191,7 +238,8 @@ function init() {
     createPlatforms()
     createText();
     trees();
-    // trees2();
+    
+    //trees2();
     // trees3();
     //
     renderer = new THREE.WebGLRenderer( { antialias: true } );
@@ -217,20 +265,9 @@ function trees() {
 //     const gltfLoader = new GLTFLoader();
 //     gltfLoader.load('/stage2tree/scene.gltf', (gltf) => {
 //     const treesGLTF2 = gltf.scene;
-//     treesGLTF2.scale.set(4,4,4)
+//     treesGLTF2.scale.set(5,5,5)
 //     treesGLTF2.position.z=-1247;
-//     treesGLTF2.position.x=-120;
-//     treesGLTF2.rotation.y=1.5;
-//     scene.add(treesGLTF2);
-//     })}
-
-// function trees3() {
-//     const gltfLoader = new GLTFLoader();
-//     gltfLoader.load('/stage2tree/scene.gltf', (gltf) => {
-//     const treesGLTF2 = gltf.scene;
-//     treesGLTF2.scale.set(4,4,4)
-//     treesGLTF2.position.z=-1240;
-//     treesGLTF2.position.x=370;
+//     treesGLTF2.position.x=0;
 //     treesGLTF2.rotation.y=1.5;
 //     scene.add(treesGLTF2);
 //     })}
@@ -303,23 +340,6 @@ function createText() {
             geometry_stage2[i]=new THREE.ShapeGeometry( shape_stage2[i] );
             mesh_stage2[i] = new THREE.Mesh( geometry_stage2[i], matLite2 );
             createPositionText(mesh_stage2[i],0+45*i, 235, -900);
-        }
-        //stage3
-        let text_stage3=["Tuyul", "Paku", "Anak Main Gobag Sodor", "Kelapa"];
-        let shape_stage3=[4];
-        let geometry_stage3=[4];
-        let mesh_stage3=[4];
-
-        let shapes_podium3 = font.generateShapes( "Aku Sembunyi tapi kepalaku masih terlihat, Apakah aku?", 5 );
-        let geometry_podium3 = new THREE.ShapeGeometry( shapes_podium3 );
-        let podiumText3 = new THREE.Mesh( geometry_podium3, matLite2 );
-        createPositionText(podiumText3,20, 200, -750);
-        
-        for (let i = 0; i < 4; i++) {
-            shape_stage3[i]=font.generateShapes( text_stage3[i], 5 );
-            geometry_stage3[i]=new THREE.ShapeGeometry( shape_stage3[i] );
-            mesh_stage3[i] = new THREE.Mesh( geometry_stage3[i], matLite2 );
-            createPositionText(mesh_stage3[i],0+45*i, 235, -900);
         }
         */
     } );
@@ -401,14 +421,14 @@ function createPlatforms(){
     let stairs_arr3=[11];
     for (let i = 0; i < 10; i++) {
         stairs_arr3[i]=kubus.clone();
-        if(i==9) createKubus(stairs_arr3[i],325, 95, -1780);
-        else createKubus(stairs_arr3[i],60+i*30, 95, -1780);
+        if(i==9) createKubus(stairs_arr3[i],205, 95, -1600);
+        else createKubus(stairs_arr3[i],-60+i*30, 95, -1600);
     }
     let stairs_arr4=[11];
     for (let i = 0; i < 10; i++) {
         stairs_arr4[i]=kubus.clone();
-        if(i==9) createKubus(stairs_arr4[i],325,125, -1810);
-        else createKubus(stairs_arr4[i],60+i*30, 125, -1810);
+        if(i==9) createKubus(stairs_arr4[i],205,125, -1630);
+        else createKubus(stairs_arr4[i],-60+i*30, 125, -1630);
     }
     
     //pillar 
@@ -420,44 +440,18 @@ function createPlatforms(){
     let pillarr = pillar.clone();
     pillarr.position.set(230, 120, -645);
     scene.add(pillarr);
-    // let pillarArray2=[10];
-    // for (let i = 0; i < 8; i++) {
-    //     pillarArray2[i]=pillar.clone();
-    //     createKubus(pillarArray2[i],230, 5+i*30, -645);
-    //   }
-    // let pillarArray=[10];
     //pillar kiri
     let pillarl = pillar.clone();
     pillarl.position.set(-90, 120, -645);
     scene.add(pillarl);
-    // for (let i = 0; i < 8; i++) {
-    //     pillarArray[i]=pillar.clone();
-    //     createKubus(pillarArray[i],-90, 5+i*30, -645);
-    // }
     //pillar stage 2
     let pillarr2 = pillar.clone();
-    pillarr2.position.set(350, 120, -1835);
+    pillarr2.position.set(230, 120, -1655);
     scene.add(pillarr2);
-    // let pillarr2 = pillar.clone();
-    // pillarr2.position.set(350, 150, -1835);
-    // scene.add(pillarr2);
-    // let pillarArr3=[10];
-    // for (let i = 0; i < 8; i++) {
-    //     pillarArr3[i]=pillar.clone();
-    //     createKubus(pillarArr3[i],350, 5+i*30, -1835);
-    //   }
-    // let pillarArr4=[10];
     //pillar kiri
     let pillarl2 = pillar.clone();
-    pillarl2.position.set(30, 120, -1835);
+    pillarl2.position.set(-90, 120, -1655);
     scene.add(pillarl2);
-    // let pillarl2 = pillar.clone();
-    // pillarl2.position.set(30,150,-1835);
-    // scene.add(pillarl2);
-    // for (let i = 0; i < 8; i++) {
-    //     pillarArr4[i]=pillar.clone();
-    //     createKubus(pillarArr4[i],30, 5+i*30, -1835);
-    // }
     //stage
     let geo = new THREE.BoxGeometry(310,170,270);
     // let texture = new THREE.MeshLambertMaterial({color:ssrgb(0,0,250)'});
@@ -465,7 +459,7 @@ function createPlatforms(){
     let cube = new THREE.Mesh(geo, wood);
     createKubus(cube,80, 85, -770);
     //stage2
-    let cube2 = cube.clone();createKubus(cube2,200, 85, -1960);
+    let cube2 = cube.clone();createKubus(cube2,80, 85, -1780);
 
     //atapnya pilar
     const roof_geo = new THREE.TorusGeometry( 158, 15, 15,56,3.2 );
@@ -480,10 +474,10 @@ function createPlatforms(){
     let pt2= pt.clone();createKubus(pt2,230, 240, -645);
     //stage 2
     let torus2 = torus.clone();
-    torus2.position.set(190, 245, -1835);
+    torus2.position.set(70, 245, -1655);
     scene.add( torus2 );
-    let pt3= pt.clone();createKubus(pt3,30, 240, -1835);
-    let pt4= pt.clone();createKubus(pt4,350, 240, -1835);
+    let pt3= pt.clone();createKubus(pt3,-90, 240, -1655);
+    let pt4= pt.clone();createKubus(pt4,230, 240, -1655);
 
     //Drop
     let geometry_drop = new THREE.BoxGeometry(30, 200, 30);
@@ -533,46 +527,37 @@ function createPlatforms(){
     scene.add(tembok2);
 
     //stage 2
-    let st2_1= kubus.clone();createKubus(st2_1,80,15,-1050); 
-    let st2_2= kubus.clone();createKubus(st2_2,140,35,-1080);//obstacle kanan
-    //let st2_4= kubus.clone();createKubus(st2_4,135,45,-1080);
-    let st2_3= kubus.clone();createKubus(st2_3,25,15,-1110);//obst kiri
-    let st2_5= kubus.clone();createKubus(st2_5,25,45,-1110);
-    let st2_6= kubus.clone();createKubus(st2_6,160,15,-1155);//obstacle kanan
-    let st2_7= kubus.clone();createKubus(st2_7,160,45,-1155);
-    let st2_8= kubus.clone();createKubus(st2_8,230,15,-1175);//obstacle kanan sebelum glass
-    let st2_9= kubus.clone();createKubus(st2_9,230,45,-1175);
+    let st2_1= kubus.clone();createKubus(st2_1,50,15,-1050); 
+    let st2_2= kubus.clone();createKubus(st2_2,110,35,-1080);//obstacle kanan
+    let st2_6= kubus.clone();createKubus(st2_6,130,15,-1155);//obstacle kanan
+    let st2_7= kubus.clone();createKubus(st2_7,130,45,-1155);
+    let st2_8= kubus.clone();createKubus(st2_8,200,15,-1175);//obstacle kanan sebelum glass
+    let st2_9= kubus.clone();createKubus(st2_9,200,45,-1175);
+    //let st2_11= kubus.clone();createKubus(st2_11,200,60,-1175);
+    let geometry_half = new THREE.BoxGeometry(30,15,30);
+    let kubus_half = new THREE.Mesh(geometry_half, texture);createKubus(kubus_half,200,66,-1175);
     //path kaca 1
     let glass = new THREE.BoxGeometry(20, 20, 120);
     let glass_txt = new THREE.MeshLambertMaterial({map: loader.load('texture/glass.jpg'), side: THREE.DoubleSide});
     let path = new THREE.Mesh(glass, glass_txt);
-    path.position.set(230,60,-1245);
+    path.position.set(200,60,-1245);
     scene.add(path);
     objects.push(path);
     let path3 = path.clone();
-    path3.position.set(130,60,-1385);
+    path3.position.set(100,60,-1385);
     scene.add(path3);
     objects.push(path3);
     //path kaca 2
     let glass2 = new THREE.BoxGeometry(120, 20, 20);
     let glass2_txt = new THREE.MeshLambertMaterial({map: loader.load('texture/glass.jpg'), side: THREE.DoubleSide});
     let path2 = new THREE.Mesh(glass2, glass2_txt);
-    path2.position.set(180,60,-1315);
+    path2.position.set(150,60,-1315);
     scene.add(path2);
     objects.push(path2);
 
-    let st2_10= kubus.clone();createKubus(st2_10,130,60,-1455); 
-    //stage kecil
-    let stage2 = new THREE.BoxGeometry(180,100,20);
-    let stage2_txt = new THREE.MeshLambertMaterial({map: loader.load('texture/wood1.jpg'), side: THREE.DoubleSide});
-    let stages2 = new THREE.Mesh(stage2, stage2_txt);
-    stages2.position.set(200,15,-1525);
-    scene.add(stages2);
-    let stage3 = new THREE.BoxGeometry(180,20,150);
-    let stage3_txt = new THREE.MeshLambertMaterial({map: loader.load('texture/wood1.jpg'), side: THREE.DoubleSide});
-    let stages3 = new THREE.Mesh(stage3, stage3_txt);
-    stages3.position.set(200,55,-1610);
-    scene.add(stages3);
+    let st2_10= kubus.clone();createKubus(st2_10,100,60,-1455); 
+    let st2_12= kubus.clone();createKubus(st2_12,100,60,-1525); 
+    let st2_13= kubus.clone();createKubus(st2_13,30,77,-1555); 
 
 }
 
@@ -719,65 +704,76 @@ function animate() {
         }
         //sketsa 2
         //1st box
-        if ( inputCollision(controls, 80,15,-1050,30)==true ) {
+        if ( inputCollision(controls, 50,15,-1050,30)==true ) {
             velocity.y = -velocity.y;
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
         }
         //2nd box kanan
 
-        if (inputCollision(controls, 135,35,-1080,30)==true ) {
+        if (inputCollision(controls, 110,35,-1080,30)==true ) {
             velocity.y = -velocity.y;
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
 		}
         //3rd box kiri
-        if ( inputCollision(controls, 25,15,-1110,30)==true || inputCollision(controls, 25,45,-1110,30)==true ) {
-            velocity.x = -velocity.x * 3;
-            velocity.z = -velocity.z * 3;
-		}
+        // if ( inputCollision(controls, 25,15,-1110,30)==true || inputCollision(controls, 25,45,-1110,30)==true ) {
+        //     velocity.x = -velocity.x * 3;
+        //     velocity.z = -velocity.z * 3;
+		// }
         //4box kanan
-        if ( inputCollision(controls, 135,15,-1155,30)==true || inputCollision(controls, 230,45,-1175,30)==true ) {
+        if ( inputCollision(controls, 130,15,-1155,30)==true || inputCollision(controls, 200,45,-1175,30)==true ) {
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
 		}
-        //box sebelum kaca
-        if ( inputCollision(controls, 230,15,-1175,30)==true || inputCollision(controls, 135,45,-1155,30)==true ) {
+        //box sebelum kaca 200,75,-1175
+        if ( inputCollision(controls, 200,15,-1175,30)==true || inputCollision(controls, 130,45,-1155,30)==true || inputCollision(controls, 200,66,-1175,30)==true) {
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
 		}
         //box kaca
-        if(inputCollisionSpesifik(controls,230,60,-1245,20,120,20)){
+        if(inputCollisionSpesifik(controls,200,60,-1245,20,120,20)){
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
             velocity.y = -velocity.y; 
         }
 
-        if(inputCollisionSpesifik(controls,130,60,-1385,20,120,20)){
+        if(inputCollisionSpesifik(controls,100,60,-1385,20,120,20)){
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
             velocity.y = -velocity.y; 
         }
 
-        if(inputCollisionSpesifik(controls,180,60,-1315,120,20,20)){
+        if(inputCollisionSpesifik(controls,150,60,-1315,120,20,20)){
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
             velocity.y = -velocity.y; 
         }
         //box sesudah kaca
-        if ( inputCollision(controls, 200,15,-1455,30)==true) {
+        if ( inputCollision(controls, 100,60,-1455,30)==true) {
             velocity.x = -velocity.x * 3;
+            velocity.y = -velocity.y; 
             velocity.z = -velocity.z * 3;
         }
-        //stage kecil
-        if(inputCollisionSpesifik(controls, 200,15,-1525, 180, 100, 20)){
+        if ( inputCollision(controls, 100,60,-1525,30)==true) {
             velocity.x = -velocity.x * 3;
+            velocity.y = -velocity.y; 
             velocity.z = -velocity.z * 3;
         }
-        if(inputCollisionSpesifik(controls, 200,55,-1610, 180, 20, 150)){
+        if ( inputCollision(controls, 30,77,-1555,30)==true) {
             velocity.x = -velocity.x * 3;
+            velocity.y = -velocity.y; 
             velocity.z = -velocity.z * 3;
         }
+
+        if ( controls.getObject().position.y > 110 && controls.getObject().position.y < 140 && controls.getObject().position.x < 195 && controls.getObject().position.x > -75 && controls.getObject().position.z < -1615 && controls.getObject().position.z > -1645) {
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+		}
+        if ( controls.getObject().position.y > 0 && controls.getObject().position.y < 170 && controls.getObject().position.x < 195 && controls.getObject().position.x > -75 && controls.getObject().position.z < -1645 && controls.getObject().position.z > -1885) {
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+		}
 
         //score
         if (level1clear==0 && inputCollision(controls, 45,130,-920,30)==true) {
@@ -793,15 +789,8 @@ function animate() {
             elementScore.innerHTML = currentScore;
             level2clear=2;
 		}
-        if (level3clear==0 && inputCollision(controls, 45,130,-921,30)==true) {
-            currentScore += Score;
-            console.log(currentScore);
-            elementScore.innerHTML = currentScore;
-            level3clear=2;
-		}
         */
     }
-
     prevTime = time;
     renderer.render( scene, camera );
 }
