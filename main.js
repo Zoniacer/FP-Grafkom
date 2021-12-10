@@ -21,7 +21,7 @@ const direction = new THREE.Vector3();
 const vertex = new THREE.Vector3();
 const color = new THREE.Color();
 
-let Score = 10;
+let Score = 100;
 let currentScore = 0;
 let elementScore = document.getElementById("score");
 let level1clear = 0;
@@ -324,7 +324,7 @@ function createText() {
             createPositionText(mesh_stage1[i],0+45*i, 235, -900);
         }
         //stage2
-        /*
+        
         let text_stage2=["Matahari", "Bulan", "Langit", "Laba"];
         let shape_stage2=[4];
         let geometry_stage2=[4];
@@ -333,15 +333,15 @@ function createText() {
         let shapes_podium2 = font.generateShapes( "Jika diucapkan sekali jauh, diucapkan dua kali dekat. Apakah itu?", 5 );
         let geometry_podium2 = new THREE.ShapeGeometry( shapes_podium2 );
         let podiumText2 = new THREE.Mesh( geometry_podium2, matLite2 );
-        createPositionText(podiumText2,20, 200, -750);
+        createPositionText(podiumText2,10, 200, -1760);
         
         for (let i = 0; i < 4; i++) {
             shape_stage2[i]=font.generateShapes( text_stage2[i], 5 );
             geometry_stage2[i]=new THREE.ShapeGeometry( shape_stage2[i] );
             mesh_stage2[i] = new THREE.Mesh( geometry_stage2[i], matLite2 );
-            createPositionText(mesh_stage2[i],0+45*i, 235, -900);
+            createPositionText(mesh_stage2[i],(0+45*i)-5, 235, -1910);
         }
-        */
+        
     } );
 
 }
@@ -842,20 +842,20 @@ function animate() {
         }
 
         //score
-        if (level1clear==0 && inputCollision(controls, 45,130,-920,30)==true) {
+        if (level1clear==0 && inputCollision(controls, 0,130,-920,30)==true) {
             currentScore += Score;
             console.log(currentScore);
             elementScore.innerHTML = currentScore;
             level1clear=2;
 		}
-        /*
-        if (level2clear==0 && inputCollision(controls, 45,130,-921,30)==true) {
+        
+        if (level2clear==0 && inputCollision(controls, 90,130,-1930,30)==true) {
             currentScore += Score;
             console.log(currentScore);
             elementScore.innerHTML = currentScore;
             level2clear=2;
 		}
-        */
+    
     }
     prevTime = time;
     renderer.render( scene, camera );
