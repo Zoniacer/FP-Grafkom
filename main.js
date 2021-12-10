@@ -557,7 +557,45 @@ function createPlatforms(){
 
     let st2_10= kubus.clone();createKubus(st2_10,100,60,-1455); 
     let st2_12= kubus.clone();createKubus(st2_12,100,60,-1525); 
-    let st2_13= kubus.clone();createKubus(st2_13,30,77,-1555); 
+    let st2_13= kubus.clone();createKubus(st2_13,30,77,-1555);
+
+    let drop21 = drop.clone();
+    drop21.position.set(0,130, -1930);
+    let drop22 = drop.clone();
+    drop22.position.set(45,130,-1930);
+    let drop23 = drop.clone();
+    drop23.position.set(90,130,-1930);
+    let drop24 = drop.clone();
+    drop24.position.set(135,130,-1930);
+    scene.add(drop21);
+    scene.add(drop22);
+    scene.add(drop23);
+    scene.add(drop24);
+
+    //Dinding Drop
+    let dinding21 = dinding.clone()
+    dinding21.position.set(22.5,130,-1930);
+    let dinding22 = dinding.clone();
+    dinding22.position.set(67.5,130,-1930);
+    let dinding23 = dinding.clone();
+    dinding23.position.set(112.5,130,-1930);
+    scene.add(dinding21);
+    scene.add(dinding22);
+    scene.add(dinding23);
+    let dinding24 = kubus.clone();
+    createKubus(dinding24,0,245,-1930);
+    let dinding25 = kubus.clone();
+    createKubus(dinding25,45,245,-1930);
+    let dinding26 = kubus.clone();
+    createKubus(dinding26,90,245,-1930);
+    let dinding27 = kubus.clone();
+    createKubus(dinding27,135,245,-1930);
+    let tembok21 = tembok.clone()
+    tembok21.position.set(-45, 130, -1930);
+    scene.add(tembok21);
+    let tembok22 = tembok2.clone()
+    tembok22.position.set(195, 130, -1930);
+    scene.add(tembok22);
 
 }
 
@@ -702,6 +740,7 @@ function animate() {
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
         }
+
         //sketsa 2
         //1st box
         if ( inputCollision(controls, 50,15,-1050,30)==true ) {
@@ -774,6 +813,33 @@ function animate() {
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
 		}
+        
+        //Dinding Drop 2
+        //Dinding Drop
+        if(inputCollisionSpesifik(controls, -45, 130, -1930, 60, 30, 260)){
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+        }
+        if(inputCollisionSpesifik(controls, 195, 130, -1930, 90, 30, 260)){
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+        }
+        if(inputCollisionSpesifik(controls, 22.5, 130, -1930, 15, 30, 260)){
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+        }
+        if(inputCollisionSpesifik(controls, 67.5, 130, -1930, 15, 30, 260)){
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+        }
+        if(inputCollisionSpesifik(controls, 112.5, 130, -1930, 15, 30, 260)){
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+        }
+        if(controls.getObject().position.x > 240 || controls.getObject().position.x < -100){
+            velocity.x = -velocity.x * 3;
+            velocity.z = -velocity.z * 3;
+        }
 
         //score
         if (level1clear==0 && inputCollision(controls, 45,130,-920,30)==true) {
