@@ -84,7 +84,7 @@ function init() {
 
     scene = new THREE.Scene();
     const loaderBackground = new THREE.TextureLoader();
-    const textureBackground = loaderBackground.load('texture/Skybox.jpg', () => {
+    const textureBackground = loaderBackground.load('texture/Skybox4.jpg', () => {
         const rt = new THREE.WebGLCubeRenderTarget(textureBackground.image.height);
         rt.fromEquirectangularTexture(renderer, textureBackground);
         scene.background = rt.texture;
@@ -195,28 +195,7 @@ function init() {
     let floorGeometry = new THREE.PlaneGeometry( 900, 4200 );
     floorGeometry.rotateX( - Math.PI / 2 );
 
-    // vertex displacement
-
     let position = floorGeometry.attributes.position;
-
-    // let floorGeometry2 = new THREE.PlaneGeometry( 500, 500 );
-    // floorGeometry2.rotateX( - Math.PI / 2 );
-
-    // vertex displacement
-
-    // let position2 = floorGeometry2.attributes.position;
-    // position2.z = 2;
-    // for ( let i = 0, l = position.count; i < l; i ++ ) {
-
-    // 	vertex.fromBufferAttribute( position, i );
-
-    // 	vertex.x += Math.random() * 20 - 10;
-    // 	vertex.y += Math.random() * 2;
-    // 	vertex.z += Math.random() * 20 - 10;
-
-    // 	position.setXYZ( i, vertex.x, vertex.y, vertex.z );
-
-    // }
 
     var groundTexture = new THREE.TextureLoader().load("texture/img.jpg");
     groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
