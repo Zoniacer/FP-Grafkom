@@ -7,6 +7,7 @@ let camera, scene, renderer, controls;
 const objects = [];
 
 let raycaster;
+let finish=0;
 
 let moveForward = false;
 let moveBackward = false;
@@ -67,11 +68,13 @@ function timeToString(time) {
   // Create "start", "pause" and "reset" functions
   
   function start() {
-    startTime = Date.now() - elapsedTime;
-    timerInterval = setInterval(function printTime() {
-      elapsedTime = Date.now() - startTime;
-      print(timeToString(elapsedTime));
-    }, 10);
+    if(finish == 0){
+        startTime = Date.now() - elapsedTime;
+        timerInterval = setInterval(function printTime() {
+        elapsedTime = Date.now() - startTime;
+        print(timeToString(elapsedTime));
+        }, 10);
+    }
   }
   
   function pause() {
@@ -84,7 +87,7 @@ function init() {
 
     scene = new THREE.Scene();
     const loaderBackground = new THREE.TextureLoader();
-    const textureBackground = loaderBackground.load('texture/Skybox4.jpg', () => {
+    const textureBackground = loaderBackground.load('texture/Skydome2.jpg', () => {
         const rt = new THREE.WebGLCubeRenderTarget(textureBackground.image.height);
         rt.fromEquirectangularTexture(renderer, textureBackground);
         scene.background = rt.texture;
@@ -776,17 +779,14 @@ function animate() {
         //box sesudah kaca
         if ( inputCollision(controls, 100,60,-1455,30)==true) {
             velocity.x = -velocity.x * 3;
-            velocity.y = -velocity.y; 
             velocity.z = -velocity.z * 3;
         }
         if ( inputCollision(controls, 100,60,-1525,30)==true) {
             velocity.x = -velocity.x * 3;
-            velocity.y = -velocity.y; 
             velocity.z = -velocity.z * 3;
         }
         if ( inputCollision(controls, 30,77,-1555,30)==true) {
             velocity.x = -velocity.x * 3;
-            velocity.y = -velocity.y; 
             velocity.z = -velocity.z * 3;
         }
 
@@ -842,9 +842,14 @@ function animate() {
 		}
     
         //finish line
-        if (inputCollisionSpesifik(controls, 70,0,-2000,200,30,20)==true) {
+        if (inputCollisionSpesifik(controls, 70,0,-2000,200,20,30)==true) {
             pause();
+            finish = 1;
 		}
+
+        if(finish==1){
+
+        }
 
     }
     prevTime = time;
