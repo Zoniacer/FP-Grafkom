@@ -597,6 +597,12 @@ function createPlatforms(){
     tembok22.position.set(195, 130, -1930);
     scene.add(tembok22);
 
+    //finish line
+    let finish_geometry = new THREE.BoxGeometry(200,2,20);
+    let finish_texture = new THREE.MeshLambertMaterial({map: loader.load('texture/finish_line.jpg'), side: THREE.DoubleSide});
+    let finish_line = new THREE.Mesh(finish_geometry, finish_texture);createKubus(finish_line,70,0,-2000);//1st cube
+    
+
 }
 
 
@@ -856,6 +862,16 @@ function animate() {
             level2clear=2;
 		}
     
+        
+        //finish line
+        /*
+        if (inputCollisionSpesifik(controls, 45,130,-920,30)==true) {
+            currentScore += Score;
+            console.log(currentScore);
+            elementScore.innerHTML = currentScore;
+            level1clear=2;
+		}
+        */
     }
     prevTime = time;
     renderer.render( scene, camera );
