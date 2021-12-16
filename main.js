@@ -2,6 +2,7 @@ import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threej
 import {PointerLockControls} from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/controls/PointerLockControls.js';
 import { FontLoader } from './jsm/loaders/FontLoader.js';
 import {GLTFLoader} from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/loaders/GLTFLoader.js';
+
 let camera, scene, renderer, controls;
 
 const objects = [];
@@ -90,6 +91,7 @@ function timeToString(time) {
 function init() {
     camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 500 );
     camera.position.y = 20;
+    camera.position.z = 100;
 
     scene = new THREE.Scene();
     const loaderBackground = new THREE.TextureLoader();
@@ -119,9 +121,11 @@ function init() {
     } );
 
     controls.addEventListener( 'unlock', function () {
-        blocker.style.display = 'block';
-        instructions.style.display = '';
-        pause();
+        if(finish!=1){
+            blocker.style.display = 'block';
+            instructions.style.display = '';
+            pause();
+        }
     } );
 
 	scene.add( controls.getObject() );
@@ -148,9 +152,11 @@ function init() {
 				break;
 
             case 'Space':
-                jumping_sound.pause();
-                jumping_sound.currentTime = 0;
-                jumping_sound.play();
+                if(finish!=1){
+                    jumping_sound.pause();
+                    jumping_sound.currentTime = 0;
+                    jumping_sound.play();
+                }
 				if ( canJump === true ) velocity.y += 350;
 				canJump = false;
 				break;
@@ -253,8 +259,8 @@ function trees() {
         finaltime.innerText=timeToString(elapsedTime);
         blocker.style.display = 'block';
         finishelement.style.display = '';
+        controls.unlock();
         animate=null;
-
     }
 
 // function trees2() {
