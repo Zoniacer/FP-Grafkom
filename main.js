@@ -21,12 +21,18 @@ const velocity = new THREE.Vector3();
 const direction = new THREE.Vector3();
 const vertex = new THREE.Vector3();
 const color = new THREE.Color();
+const finishelement = document.getElementById( 'finish' );
+const finaltime = document.getElementById( 'finaltime' );
+const finalscore = document.getElementById( 'finalscore' );
+const blocker = document.getElementById( 'blocker' );
+const instructions = document.getElementById( 'instructions' );
 
 let Score = 100;
 let currentScore = 0;
 let elementScore = document.getElementById("score");
 let level1clear = 0;
 let level2clear = 0;
+
 init();
 animate();
 
@@ -100,8 +106,7 @@ function init() {
 
     controls = new PointerLockControls( camera, document.body );
 
-    const blocker = document.getElementById( 'blocker' );
-    const instructions = document.getElementById( 'instructions' );
+    finishelement.style.display = 'none';
 
     instructions.addEventListener( 'click', function () {
         controls.lock();
@@ -242,6 +247,15 @@ function trees() {
     treesGLTF.position.x=40;
     scene.add(treesGLTF);
     })}
+
+    function finished(){
+        finalscore.innerText=currentScore;
+        finaltime.innerText=timeToString(elapsedTime);
+        blocker.style.display = 'block';
+        finishelement.style.display = '';
+        animate=null;
+
+    }
 
 // function trees2() {
 //     const gltfLoader = new GLTFLoader();
@@ -848,7 +862,7 @@ function animate() {
 		}
 
         if(finish==1){
-
+            finished();
         }
 
     }
