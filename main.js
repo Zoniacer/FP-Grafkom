@@ -744,9 +744,8 @@ function animate() {
             velocity.x = -velocity.x * 3;
             velocity.z = -velocity.z * 3;
         }
-        if(controls.getObject().position.x > 240 || controls.getObject().position.x < -100){
-            velocity.x = -velocity.x * 3;
-            velocity.z = -velocity.z * 3;
+        if(controls.getObject().position.x > 240){
+            controls.getObject().position.x -= 1;
         }
 
         //sketsa 2
